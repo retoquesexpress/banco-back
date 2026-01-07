@@ -27,22 +27,35 @@ class Account {
 }
 
 class Client {
-    +client_id
+    +password
     +name
-    +email
+    +api_Token
 }
 
 class CreditCard {
     +cardNumber
     +expirationDate
-    +cvv
+    +cvc
+    +clientName
 }
 
 class AccountMovements {
-+movement_id
+    +MovementType
+    +OriginMovement
+    +CreditCardOrigin
     +date
     +amount
-    +description
+    +concept
+}
+enum AccountType {
+    +Add amount
+    +Withdraw amount
+}
+
+enum BankMovement {
+    +Transfer
+    +Domiciliation
+    +BankCard
 }
 
 Client "1" -- "1" Account : relates >
