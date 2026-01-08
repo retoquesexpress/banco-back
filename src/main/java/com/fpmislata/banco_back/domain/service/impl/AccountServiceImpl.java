@@ -2,6 +2,7 @@ package com.fpmislata.banco_back.domain.service.impl;
 
 import com.fpmislata.banco_back.domain.service.AccountService;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
+import com.fpmislata.banco_back.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<AccountDto> findAll() {
         if(accountService.findAll().isEmpty()){
-            throw new RuntimeException("No accounts found");
+            throw new ResourceNotFoundException("No accounts found");
         }
         return accountService.findAll();
     }
@@ -26,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto getByIban(String iban) {
         Optional<AccountDto> account = accountService.findByIban(iban);
         if(account.isEmpty()){
-            throw new RuntimeException("Account not found");
+            throw new ResourceNotFoundException("Account not found");
         }
         return account.get();
     }
@@ -35,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
     public Optional<AccountDto> findByIban(String iban) {
         Optional<AccountDto> account = accountService.findByIban(iban);
         if(account.isEmpty()){
-            throw new RuntimeException("Account not found");
+            throw new ResourceNotFoundException("Account not found");
         }
         return account;
     }
@@ -51,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto update(AccountDto accountDto) {
         Optional<AccountDto> account = accountService.findByIban(accountDto.iban());
         if(account.isEmpty()){
-            throw new RuntimeException("Account not found");
+            throw new ResourceNotFoundException("Account not found");
         }
         return  accountService.update(accountDto);
     }
@@ -61,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
     public void deleteById(Integer idAccount) {
         Optional<AccountDto> account = accountService.findByIban(idAccount.toString());
         if(account.isEmpty()){
-            throw new RuntimeException("Account not found");
+            throw new ResourceNotFoundException("Account not found");
         }
         accountService.deleteById(idAccount);
     }
