@@ -15,7 +15,7 @@ public class AccountMapper {
         return INSTANCE;
     }
 
-    public Object fromAccountJpaEntityToAccountEntity(AccountJpaEntity accountJpaEntity) {
+    public AccountEntity fromAccountJpaEntityToAccountEntity(AccountJpaEntity accountJpaEntity) {
         if (accountJpaEntity == null) {
             return null;
         }

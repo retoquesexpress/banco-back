@@ -26,7 +26,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public AccountEntity getByIban(String iban) {
-        return accountJpaDao.getByIban(iban)
+        return accountJpaDao.findByIban(iban)
                 .map(AccountMapper.getInstance()::fromAccountJpaEntityToAccountEntity)
                 .orElse(null);}
 
