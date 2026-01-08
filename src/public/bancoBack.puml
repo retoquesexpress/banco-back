@@ -21,7 +21,7 @@ skinparam nodesep 60
 skinparam ranksep 10
 
 class Account {
-    +accountNumber
+    +iban
     +balance
 
 }

@@ -1,30 +1,20 @@
 package com.fpmislata.banco_back.domain.model;
 
 public class Account {
-    private Integer idAccount;
-    private String accountNumber;
+    private String iban;
     private Double balance;
 
-    public Account(Integer idAccount, String accountNumber, Double balance) {
-        this.idAccount = idAccount;
-        this.accountNumber = accountNumber;
+    public Account(String iban, Double balance) {
+        this.iban = iban;
         this.balance = balance;
     }
 
-    public Integer getIdAccount() {
-        return idAccount;
+    public String getIban() {
+        return iban;
     }
 
-    public void setIdAccount(Integer idAccount) {
-        this.idAccount = idAccount;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public Double getBalance() {
