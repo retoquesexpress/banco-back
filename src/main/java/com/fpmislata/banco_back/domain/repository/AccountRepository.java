@@ -7,10 +7,7 @@ import java.util.Optional;
 
 public interface AccountRepository {
 
-    List<AccountEntity> findAll();
+    List<AccountEntity> findByClient();
     AccountEntity getByIban(String iban);
     Optional<AccountEntity> findByIban(String iban);
-    AccountEntity create(AccountEntity accountEntity);
-    AccountEntity update(AccountEntity accountEntity);
-    void deleteById(Integer idAccount);
 }

@@ -17,8 +17,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public List<AccountEntity> findAll() {
-        return accountJpaDao.findAll()
+    public List<AccountEntity> findByClient() {
+        return accountJpaDao.findByClient()
                 .stream()
                 .map(AccountMapper.getInstance()::fromAccountJpaEntityToAccountEntity)
                 .toList();
@@ -36,25 +36,4 @@ public class AccountRepositoryImpl implements AccountRepository {
                 .map(AccountMapper.getInstance()::fromAccountJpaEntityToAccountEntity);
     }
 
-    @Override
-    public AccountEntity create(AccountEntity accountEntity) {
-        AccountJpaEntity entity = AccountMapper.getInstance().fromAccountEntityToAccountJpaEntity(accountEntity);
-        AccountJpaEntity createdEntity = accountJpaDao.create(entity);
-        return AccountMapper.getInstance().fromAccountJpaEntityToAccountEntity(createdEntity);
-    }
-
-    @Override
-    public AccountEntity update(AccountEntity accountEntity) {
-        String iban = accountEntity.iban();
-        AccountJpaEntity existingEntity = accountJpaDao.findByIban(iban).orElseThrow(
-                () -> new RuntimeException("Cuenta con IBAN " + iban + " no encontrada para actualizar."));
-        existingEntity.setBalance(accountEntity.balance());
-        AccountJpaEntity updatedEntity = accountJpaDao.update(existingEntity);
-        return AccountMapper.getInstance().fromAccountJpaEntityToAccountEntity(updatedEntity);
-    }
-
-    @Override
-    public void deleteById(Integer idAccount) {
-        accountJpaDao.deleteById(idAccount);
-    }
 }

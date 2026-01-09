@@ -7,10 +7,7 @@ import java.util.Optional;
 
 public interface AccountService {
 
-    List<AccountDto> findAll();
+    List<AccountDto> findByClient();
     AccountDto getByIban(String iban);
     Optional<AccountDto> findByIban(String iban);
-    AccountDto create(AccountDto accountEntity);
-    AccountDto update(AccountDto accountEntity);
-    void deleteById(Integer idAccount);
 }

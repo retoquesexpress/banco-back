@@ -8,10 +8,7 @@ import java.util.Optional;
 
 public interface AccountJpaDao {
 
-    List<AccountJpaEntity> findAll();
+    List<AccountJpaEntity> findByClient();
     AccountJpaEntity getByIban(String iban);
     Optional<AccountJpaEntity> findByIban(String iban);
-    AccountJpaEntity create(AccountJpaEntity accountEntity);
-    AccountJpaEntity update(AccountJpaEntity accountEntity);
-    void deleteById(Integer idAccount);
 }
