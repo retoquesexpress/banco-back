@@ -1,0 +1,34 @@
+CREATE TABLE Client (
+    dni VARCHAR(9) PRIMARY KEY,
+    userName VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    surname1 VARCHAR(50) NOT NULL,
+    surname2 VARCHAR(50),
+    apiToken VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Account (
+     iban VARCHAR(50) NOT NULL,
+     balance DECIMAL(10,2)
+);
+
+CREATE TABLE AccountMovement (
+    idAccountMovement INT PRIMARY KEY,
+    creditCardOrigin VARCHAR(50) NOT NULL,
+    originMovement VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    amount DOUBLE NOT NULL,
+    movementType VARCHAR(50) NOT NULL,
+    concept VARCHAR(50)
+);
+
+CREATE TABLE CreditCard (
+        idCreditCard INT PRIMARY KEY,
+        cardNumber VARCHAR(50) NOT NULL,
+        expirationDate DATE NOT NULL,
+        cvv INT NOT NULL,
+        clientName VARCHAR(50) NOT NULL
+);
+
+
