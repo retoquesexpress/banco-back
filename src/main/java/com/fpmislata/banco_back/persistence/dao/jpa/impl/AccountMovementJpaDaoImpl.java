@@ -1,0 +1,30 @@
+package com.fpmislata.banco_back.persistence.dao.jpa.impl;
+
+import com.fpmislata.banco_back.persistence.dao.jpa.AccountMovementJpaDao;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountMovementJpaEntity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+import java.util.List;
+import java.util.Optional;
+
+public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<AccountMovementJpaEntity> findAllAccountMovements() {
+        return entityManager.createQuery("SELECT am FROM AccountMovementJpaEntity am").getResultList();
+    }
+
+    @Override
+    public Optional<AccountMovementJpaEntity> getAccountMovementById(Integer idAccountMovement) {
+        return Optional.ofNullable(entityManager.find(AccountMovementJpaEntity.class, idAccountMovement));
+    }
+
+    @Override
+    public Optional<AccountMovementJpaEntity> findAccountMovementById(Integer idAccountMovement) {
+        return Optional.ofNullable(entityManager.find(AccountMovementJpaEntity.class, idAccountMovement));
+    }
+}

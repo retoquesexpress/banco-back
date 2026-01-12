@@ -1,23 +1,39 @@
-package com.fpmislata.banco_back.domain.model;
+package com.fpmislata.banco_back.persistence.dao.jpa.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import com.fpmislata.banco_back.domain.model.enums.MovementType;
 import com.fpmislata.banco_back.domain.model.enums.OriginMovement;
-import java.util.Date;
 
-public class AccountMovement {
+@Entity
+@Table
+public class AccountMovementJpaEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAccountMovement;
     private String creditCardOrigin;
+    @Enumerated(EnumType.STRING)
     private OriginMovement originMovement;
     private Date date;
     private Double amount;
+    @Enumerated(EnumType.STRING)
     private MovementType movementType;
     private String concept;
 
-    public AccountMovement() {
+    public AccountMovementJpaEntity() {
     }
 
-    public AccountMovement(Integer idAccountMovement, String creditCardOrigin, OriginMovement originMovement, Date date,
-            Double amount, MovementType movementType, String concept) {
+    public AccountMovementJpaEntity(Integer idAccountMovement, String creditCardOrigin, OriginMovement originMovement,
+            Date date, Double amount, MovementType movementType, String concept) {
         this.idAccountMovement = idAccountMovement;
         this.creditCardOrigin = creditCardOrigin;
         this.originMovement = originMovement;

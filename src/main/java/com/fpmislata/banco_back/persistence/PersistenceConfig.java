@@ -1,6 +1,8 @@
 package com.fpmislata.banco_back.persistence;
 
+import com.fpmislata.banco_back.persistence.dao.jpa.AccountMovementJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.ClientJpaDao;
+import com.fpmislata.banco_back.persistence.dao.jpa.impl.AccountMovementJpaDaoImpl;
 import com.fpmislata.banco_back.persistence.dao.jpa.impl.ClientJpaDaoImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,11 @@ public class PersistenceConfig {
     @Bean
     public ClientJpaDao clientJpaDao() {
         return new ClientJpaDaoImpl();
+    }
+
+    @Bean
+    public AccountMovementJpaDao accountMovementJpaDao() {
+        return new AccountMovementJpaDaoImpl();
     }
 
 }
