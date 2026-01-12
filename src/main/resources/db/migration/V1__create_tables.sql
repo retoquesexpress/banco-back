@@ -10,11 +10,12 @@ CREATE TABLE Client (
 
 CREATE TABLE Account (
      iban VARCHAR(50) NOT NULL,
-     balance DECIMAL(10,2)
+     balance DECIMAL(10,2),
+     idClient VARCHAR(9) NOT NULL
 );
 
 CREATE TABLE AccountMovement (
-    idAccountMovement INT PRIMARY KEY,
+    idAccountMovement INT PRIMARY KEY AUTO_INCREMENT,
     creditCardOrigin VARCHAR(50) NOT NULL,
     originMovement VARCHAR(50) NOT NULL,
     date DATE NOT NULL,
@@ -28,7 +29,7 @@ CREATE TABLE CreditCard (
         cardNumber VARCHAR(50) NOT NULL,
         expirationDate DATE NOT NULL,
         cvv INT NOT NULL,
-        clientName VARCHAR(50) NOT NULL
+        idAccount VARCHAR(50) NOT NULL
 );
 
 
