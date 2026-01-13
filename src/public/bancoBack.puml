@@ -27,9 +27,14 @@ class Account {
 }
 
 class Client {
-    +password
-    +name
-    +api_Token
+    +idClient;
+    +userName;
+    +password;
+    +dni;
+    +name;
+    +surname1;
+    +surname2;
+    +apiToken;
 }
 
 class CreditCard {

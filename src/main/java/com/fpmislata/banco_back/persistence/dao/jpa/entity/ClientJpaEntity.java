@@ -1,15 +1,26 @@
-package com.fpmislata.banco_back.domain.model;
+package com.fpmislata.banco_back.persistence.dao.jpa.entity;
 
-public class Client {
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+
+@Entity
+@Table(name = "client")
+public class ClientJpaEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String dni;
     private String userName;
-    private String password;
+    private  String password;
     private String name;
     private String surname1;
     private  String surname2;
     private String apiToken;
 
-    public Client(String dni, String userName, String password, String name, String surname1, String surname2, String apiToken) {
+    public ClientJpaEntity() {
+    }
+
+    public ClientJpaEntity(String dni, String userName, String password, String name, String surname1, String surname2, String apiToken) {
         this.dni = dni;
         this.userName = userName;
         this.password = password;
@@ -19,26 +30,18 @@ public class Client {
         this.apiToken = apiToken;
     }
 
-
-    public String getName() {
-        return name;
+    public String getDni() {
+        return dni;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getApiToken() {
-        return apiToken;
-    }
-
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getUserName() {
         return userName;
     }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -51,12 +54,12 @@ public class Client {
         this.password = password;
     }
 
-    public String getDni() {
-        return dni;
+    public String getName() {
+        return name;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname1() {
@@ -74,4 +77,14 @@ public class Client {
     public void setSurname2(String surname2) {
         this.surname2 = surname2;
     }
+
+    public String getApiToken() {
+        return apiToken;
+    }
+
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+
 }
