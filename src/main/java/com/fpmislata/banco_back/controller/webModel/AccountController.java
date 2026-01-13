@@ -1,4 +1,4 @@
-package com.fpmislata.banco_back.controller;
+package com.fpmislata.banco_back.controller.webModel;
 
 import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
 import com.fpmislata.banco_back.domain.service.AccountService;
