@@ -29,6 +29,7 @@ CREATE TABLE CreditCard (
         cardNumber VARCHAR(50) NOT NULL,
         expirationDate DATE NOT NULL,
         cvv INT NOT NULL,
+        nombreCompleto VARCHAR(50) NOT NULL,
         idAccount VARCHAR(50) NOT NULL
 );
 

@@ -6,6 +6,7 @@ public class CreditCard {
     private String expirationDate;
     private Integer cvv;
     private String nombreCompleto;
+    //idAccount
 
     public CreditCard() {
     }
