@@ -145,4 +145,18 @@ public class ClientMapper {
                 client.getSurname2(),
                 client.getApiToken());
     }
+
+    public ClientEntity fromClientDtoToClientEntity(ClientDto clientDto) {
+        if (clientDto == null) {
+            return null;
+        }
+        return new ClientEntity(
+                clientDto.dni(),
+                clientDto.userName(),
+                clientDto.password(),
+                clientDto.name(),
+                clientDto.surname1(),
+                clientDto.surname2(),
+                clientDto.apiToken());
+    }
 }

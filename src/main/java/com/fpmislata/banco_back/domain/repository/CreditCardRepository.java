@@ -9,5 +9,8 @@ import java.util.Optional;
 
 public interface CreditCardRepository {
     List<CreditCardDto> findAllCreditCardsByAccount(Account account);
+
     Optional<CreditCardDto> findCreditCardById(Integer id);
+
+    List<CreditCardDto> findAll();
 }

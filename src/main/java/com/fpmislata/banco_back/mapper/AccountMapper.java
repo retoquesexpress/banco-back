@@ -2,9 +2,14 @@ package com.fpmislata.banco_back.mapper;
 
 import com.fpmislata.banco_back.controller.webModel.request.AccountRequest;
 import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
+import com.fpmislata.banco_back.domain.model.Account;
 import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
+import com.fpmislata.banco_back.domain.service.dto.ClientDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
+
+import java.util.Collections;
+import java.util.List;
 
 public class AccountMapper {
     private static AccountMapper INSTANCE;
@@ -25,7 +30,14 @@ public class AccountMapper {
         }
         return new AccountEntity(
                 accountJpaEntity.getIban(),
-                accountJpaEntity.getBalance());
+                accountJpaEntity.getBalance(),
+                ClientMapper.getInstance().fromClientJpaEntityToClientEntity(accountJpaEntity.getClient()),
+                accountJpaEntity.getAccountMovements().stream()
+                        .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
+                        .toList(),
+                accountJpaEntity.getCreditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardEntity)
+                        .toList());
     }
 
     public AccountJpaEntity fromAccountEntityToAccountJpaEntity(AccountEntity accountEntity) {
@@ -35,7 +47,13 @@ public class AccountMapper {
         return new AccountJpaEntity(
                 accountEntity.iban(),
                 accountEntity.balance(),
-                null); // Note: Manual client assignment might be needed elsewhere
+                ClientMapper.getInstance().fromClientEntityToClientJpaEntity(accountEntity.client()),
+                accountEntity.accountMovements().stream()
+                        .map(AccountMovementMapper.getInstance()::fromAccountMovementEntityToAccountMovementJpaEntity)
+                        .toList(),
+                accountEntity.creditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardEntityToCreditCardJpaEntity)
+                        .toList());
     }
 
     public AccountResponse fromAccountDtoToAccountResponse(AccountDto accountDto) {
@@ -44,7 +62,10 @@ public class AccountMapper {
         }
         return new AccountResponse(
                 accountDto.iban(),
-                accountDto.balance());
+                accountDto.balance(),
+                accountDto.client(),
+                accountDto.movements(),
+                accountDto.creditCards());
     }
 
     public AccountDto fromAccountRequestToAccountDto(AccountRequest accountRequest) {
@@ -53,7 +74,25 @@ public class AccountMapper {
         }
         return new AccountDto(
                 accountRequest.iban(),
-                accountRequest.balance());
+                accountRequest.balance(),
+                null,
+                Collections.emptyList(),
+                Collections.emptyList());
+    }
+
+    public AccountDto toAccountDto(AccountEntity accountEntity, ClientDto clientDto,
+            List<com.fpmislata.banco_back.domain.service.dto.AccountMovementDto> movements) {
+        if (accountEntity == null) {
+            return null;
+        }
+        return new AccountDto(
+                accountEntity.iban(),
+                accountEntity.balance(),
+                clientDto,
+                movements,
+                accountEntity.creditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardEntityToCreditCardDto)
+                        .toList());
     }
 
     public AccountDto fromAccountEntityToAccountDto(AccountEntity accountEntity) {
@@ -62,7 +101,14 @@ public class AccountMapper {
         }
         return new AccountDto(
                 accountEntity.iban(),
-                accountEntity.balance());
+                accountEntity.balance(),
+                ClientMapper.getInstance().fromClientEntityToClientDto(accountEntity.client()),
+                accountEntity.accountMovements().stream()
+                        .map(AccountMovementMapper.getInstance()::fromAccountMovementEntityToAccountDto)
+                        .toList(),
+                accountEntity.creditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardEntityToCreditCardDto)
+                        .toList());
     }
 
     public AccountEntity fromAccountDtoToAccountEntity(AccountDto accountDto) {
@@ -71,15 +117,25 @@ public class AccountMapper {
         }
         return new AccountEntity(
                 accountDto.iban(),
-                accountDto.balance());
+                accountDto.balance(),
+                ClientMapper.getInstance().fromClientDtoToClientEntity(accountDto.client()),
+                Collections.emptyList(),
+                Collections.emptyList());
     }
 
-    public com.fpmislata.banco_back.domain.model.Account fromAccountDtoToAccount(AccountDto accountDto) {
+    public Account fromAccountDtoToAccount(AccountDto accountDto) {
         if (accountDto == null) {
             return null;
         }
-        return new com.fpmislata.banco_back.domain.model.Account(
+        Account account = new Account(
                 accountDto.iban(),
                 accountDto.balance());
+        account.setAccountMovements(accountDto.movements().stream()
+                .map(AccountMovementMapper.getInstance()::fromAccountMovementDtoToAccountMovement)
+                .toList());
+        account.setCreditCards(accountDto.creditCards().stream()
+                .map(CreditCardMapper.getInstance()::fromCreditCardDtoToCreditCard)
+                .toList());
+        return account;
     }
 }

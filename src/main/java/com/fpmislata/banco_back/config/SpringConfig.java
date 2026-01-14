@@ -1,6 +1,5 @@
 package com.fpmislata.banco_back.config;
 
-
 import com.fpmislata.banco_back.domain.repository.AccountMovementRepository;
 import com.fpmislata.banco_back.domain.repository.AccountRepository;
 import com.fpmislata.banco_back.domain.repository.ClientRepository;
@@ -36,7 +35,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Import(PersistenceConfig.class)
 public class SpringConfig {
 
-
     @Bean
     public AccountRepository accountRepository(AccountJpaDao accountJpaDao) {
         return new AccountRepositoryImpl(accountJpaDao);
@@ -71,9 +69,10 @@ public class SpringConfig {
     public CreditCardRepository creditCardRepository(CreditCardJpaDao creditCardRepositoryJpaDao) {
         return new CreditCardRepositoryImpl(creditCardRepositoryJpaDao);
     }
+
     @Bean
     public CreditCardService creditCardService(CreditCardRepository creditCardRepository) {
-        return  new CreditCardServiceImpl(creditCardRepository);
+        return new CreditCardServiceImpl(creditCardRepository);
     }
 
     @Bean

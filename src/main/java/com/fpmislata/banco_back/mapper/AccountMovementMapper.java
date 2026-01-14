@@ -61,4 +61,34 @@ public class AccountMovementMapper {
                 accountMovementDto.movementType(),
                 accountMovementDto.concept());
     }
+
+    public com.fpmislata.banco_back.domain.model.AccountMovement fromAccountMovementDtoToAccountMovement(
+            AccountMovementDto accountMovementDto) {
+        if (accountMovementDto == null) {
+            return null;
+        }
+        return new com.fpmislata.banco_back.domain.model.AccountMovement(
+                accountMovementDto.idAccountMovement(),
+                accountMovementDto.creditCardOrigin(),
+                accountMovementDto.originMovement(),
+                accountMovementDto.date(),
+                accountMovementDto.amount(),
+                accountMovementDto.movementType(),
+                accountMovementDto.concept());
+    }
+
+    public AccountMovementJpaEntity fromAccountMovementEntityToAccountMovementJpaEntity(
+            AccountMovementEntity accountMovementEntity) {
+        if (accountMovementEntity == null) {
+            return null;
+        }
+        return new AccountMovementJpaEntity(
+                accountMovementEntity.idAccountMovent(),
+                accountMovementEntity.creditCardOrigin(),
+                accountMovementEntity.originMovement(),
+                accountMovementEntity.date(),
+                accountMovementEntity.amount(),
+                accountMovementEntity.movementType(),
+                accountMovementEntity.concept());
+    }
 }

@@ -7,6 +7,7 @@ public class Account {
     private Double balance;
     private Client client;
     private List<CreditCard> creditCards;
+    private List<AccountMovement> accountMovements;
 
     public Account(String iban, Double balance) {
         this.iban = iban;
@@ -27,5 +28,21 @@ public class Account {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public List<AccountMovement> getAccountMovements() {
+        return accountMovements;
+    }
+
+    public void setAccountMovements(List<AccountMovement> accountMovements) {
+        this.accountMovements = accountMovements;
+    }
+
+    public List<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(List<CreditCard> creditCards) {
+        this.creditCards = creditCards;
     }
 }

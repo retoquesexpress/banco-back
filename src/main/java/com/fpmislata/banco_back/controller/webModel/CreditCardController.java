@@ -28,9 +28,11 @@ public class CreditCardController {
     public ResponseEntity<List<CreditCardDetailResponse>> findAllCreditCardsByAccount(
             @RequestParam(required = false) String iban) {
         if (iban == null || iban.isBlank()) {
-            // Currently CreditCardService doesn't have a findAll(), so we return an empty
-            // list or 400
-            return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
+            List<CreditCardDetailResponse> creditCards = creditCardService.findAll()
+                    .stream()
+                    .map(CreditCardMapper.getInstance()::fromCreditCardDtoToCreditCardDetailResponse)
+                    .toList();
+            return new ResponseEntity<>(creditCards, HttpStatus.OK);
         }
 
         Account account = AccountMapper.getInstance().fromAccountDtoToAccount(accountService.getByIban(iban));

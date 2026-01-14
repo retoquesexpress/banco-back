@@ -54,4 +54,69 @@ public class CreditCardMapper {
                 creditCardDto.nombreCompleto());
     }
 
+    public com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity fromCreditCardJpaEntityToCreditCardEntity(
+            CreditCardJpaEntity creditCardJpaEntity) {
+        if (creditCardJpaEntity == null) {
+            return null;
+        }
+        return new com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity(
+                creditCardJpaEntity.getIdCreditCard(),
+                creditCardJpaEntity.getCardNumber(),
+                creditCardJpaEntity.getExpirationDate(),
+                creditCardJpaEntity.getCvv(),
+                creditCardJpaEntity.getNombreCompleto());
+    }
+
+    public CreditCardJpaEntity fromCreditCardEntityToCreditCardJpaEntity(
+            com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity creditCardEntity) {
+        if (creditCardEntity == null) {
+            return null;
+        }
+        return new CreditCardJpaEntity(
+                creditCardEntity.idCreditCard(),
+                creditCardEntity.cardNumber(),
+                creditCardEntity.expirationDate(),
+                creditCardEntity.cvv(),
+                creditCardEntity.nombreCompleto(),
+                null);
+    }
+
+    public CreditCardDto fromCreditCardEntityToCreditCardDto(
+            com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity creditCardEntity) {
+        if (creditCardEntity == null) {
+            return null;
+        }
+        return new CreditCardDto(
+                creditCardEntity.idCreditCard(),
+                creditCardEntity.cardNumber(),
+                creditCardEntity.expirationDate(),
+                creditCardEntity.cvv(),
+                creditCardEntity.nombreCompleto());
+    }
+
+    public com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity fromCreditCardDtoToCreditCardEntity(
+            CreditCardDto creditCardDto) {
+        if (creditCardDto == null) {
+            return null;
+        }
+        return new com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity(
+                creditCardDto.idCreditCard(),
+                creditCardDto.cardNumber(),
+                creditCardDto.expirationDate(),
+                creditCardDto.cvv(),
+                creditCardDto.nombreCompleto());
+    }
+
+    public com.fpmislata.banco_back.domain.model.CreditCard fromCreditCardDtoToCreditCard(
+            CreditCardDto creditCardDto) {
+        if (creditCardDto == null) {
+            return null;
+        }
+        return new com.fpmislata.banco_back.domain.model.CreditCard(
+                creditCardDto.idCreditCard(),
+                creditCardDto.cardNumber(),
+                creditCardDto.expirationDate(),
+                creditCardDto.cvv(),
+                creditCardDto.nombreCompleto());
+    }
 }

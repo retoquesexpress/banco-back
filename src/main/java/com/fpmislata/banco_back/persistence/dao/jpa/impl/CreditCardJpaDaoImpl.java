@@ -28,4 +28,10 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     public Optional<CreditCardJpaEntity> findCreditCardById(Integer id) {
         return Optional.ofNullable(entityManager.find(CreditCardJpaEntity.class, id));
     }
+
+    @Override
+    public List<CreditCardJpaEntity> findAll() {
+        return entityManager.createQuery("SELECT c FROM CreditCardJpaEntity c", CreditCardJpaEntity.class)
+                .getResultList();
+    }
 }

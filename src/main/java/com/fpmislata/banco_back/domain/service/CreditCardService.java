@@ -9,7 +9,10 @@ import java.util.Optional;
 
 public interface CreditCardService {
     List<CreditCardDto> findAllCreditCardsByAccount(Account account);
+
     Optional<CreditCardDto> findCreditCardById(Integer id);
-//    CreditCardDto create(Account account, CreditCardDto creditCardDto);
+
+    List<CreditCardDto> findAll();
+    // CreditCardDto create(Account account, CreditCardDto creditCardDto);
 
 }

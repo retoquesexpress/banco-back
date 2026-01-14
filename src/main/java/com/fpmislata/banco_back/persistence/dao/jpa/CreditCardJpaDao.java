@@ -9,5 +9,8 @@ import java.util.Optional;
 
 public interface CreditCardJpaDao {
     List<CreditCardJpaEntity> findAllCreditCardsByAccount(Account account);
+
     Optional<CreditCardJpaEntity> findCreditCardById(Integer id);
+
+    List<CreditCardJpaEntity> findAll();
 }

@@ -16,16 +16,40 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
 
     @Override
     public List<AccountJpaEntity> findByClient(ClientJpaEntity client) {
-        return entityManager
-                .createQuery("SELECT a FROM AccountJpaEntity a WHERE a.client = :client", AccountJpaEntity.class)
+        List<AccountJpaEntity> accounts = entityManager
+                .createQuery(
+                        "SELECT DISTINCT a FROM AccountJpaEntity a LEFT JOIN FETCH a.accountMovements WHERE a.client = :client",
+                        AccountJpaEntity.class)
                 .setParameter("client", client)
                 .getResultList();
+
+        if (!accounts.isEmpty()) {
+            entityManager
+                    .createQuery(
+                            "SELECT DISTINCT a FROM AccountJpaEntity a LEFT JOIN FETCH a.creditCards WHERE a.client = :client",
+                            AccountJpaEntity.class)
+                    .setParameter("client", client)
+                    .getResultList();
+        }
+        return accounts;
     }
 
-
     public List<AccountJpaEntity> findAll() {
-        return entityManager.createQuery("SELECT a FROM AccountJpaEntity a", AccountJpaEntity.class)
+        List<AccountJpaEntity> accounts = entityManager
+                .createQuery(
+                        "SELECT DISTINCT a FROM AccountJpaEntity a LEFT JOIN FETCH a.accountMovements",
+                        AccountJpaEntity.class)
                 .getResultList();
+
+        if (!accounts.isEmpty()) {
+            entityManager
+                    .createQuery(
+                            "SELECT DISTINCT a FROM AccountJpaEntity a LEFT JOIN FETCH a.creditCards WHERE a IN :accounts",
+                            AccountJpaEntity.class)
+                    .setParameter("accounts", accounts)
+                    .getResultList();
+        }
+        return accounts;
     }
 
     @Override

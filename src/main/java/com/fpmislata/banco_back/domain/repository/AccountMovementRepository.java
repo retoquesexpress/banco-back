@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public interface AccountMovementRepository {
     List<AccountMovementEntity> findAllAccountMovements();
+
     AccountMovementEntity getAccountMovementById(Integer idAccountMovement);
+
     Optional<AccountMovementEntity> findAccountMovementById(Integer idAccountMovement);
+
+    List<AccountMovementEntity> findByCreditCardOrigin(String origin);
 }

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CreditCard")
+@Table(name = "creditcard")
 public class CreditCardJpaEntity implements Serializable {
     @Id
     @Column(name = "id_credit_card")
