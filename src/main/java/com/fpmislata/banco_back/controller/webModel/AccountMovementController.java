@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fpmislata.banco_back.controller.webModel.response.AccountMovementDetailResponse;
-import com.fpmislata.banco_back.domain.model.AccountMovement;
-import com.fpmislata.banco_back.domain.repository.entity.AccountMovementEntity;
 import com.fpmislata.banco_back.domain.service.AccountMovementService;
 import com.fpmislata.banco_back.mapper.AccountMovementMapper;
 
