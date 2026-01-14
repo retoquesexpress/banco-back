@@ -1,6 +1,7 @@
 package com.fpmislata.banco_back.mapper;
 
 import com.fpmislata.banco_back.controller.webModel.response.AccountMovementDetailResponse;
+import com.fpmislata.banco_back.domain.model.AccountMovement;
 import com.fpmislata.banco_back.domain.repository.entity.AccountMovementEntity;
 import com.fpmislata.banco_back.domain.service.dto.AccountMovementDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountMovementJpaEntity;
@@ -60,5 +61,35 @@ public class AccountMovementMapper {
                 accountMovementDto.amount(),
                 accountMovementDto.movementType(),
                 accountMovementDto.concept());
+    }
+
+    public AccountMovement fromAccountMovementDtoToAccountMovement(
+            AccountMovementDto accountMovementDto) {
+        if (accountMovementDto == null) {
+            return null;
+        }
+        return new AccountMovement(
+                accountMovementDto.idAccountMovement(),
+                accountMovementDto.creditCardOrigin(),
+                accountMovementDto.originMovement(),
+                accountMovementDto.date(),
+                accountMovementDto.amount(),
+                accountMovementDto.movementType(),
+                accountMovementDto.concept());
+    }
+
+    public AccountMovementJpaEntity fromAccountMovementEntityToAccountMovementJpaEntity(
+            AccountMovementEntity accountMovementEntity) {
+        if (accountMovementEntity == null) {
+            return null;
+        }
+        return new AccountMovementJpaEntity(
+                accountMovementEntity.idAccountMovent(),
+                accountMovementEntity.creditCardOrigin(),
+                accountMovementEntity.originMovement(),
+                accountMovementEntity.date(),
+                accountMovementEntity.amount(),
+                accountMovementEntity.movementType(),
+                accountMovementEntity.concept());
     }
 }

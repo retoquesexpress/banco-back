@@ -21,11 +21,20 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
 
     @Override
     public List<CreditCardDto> findAllCreditCardsByAccount(Account account) {
-        return creditCardJpaDao.findAllCreditCardsByAccount(account).stream().map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto).toList();
+        return creditCardJpaDao.findAllCreditCardsByAccount(account).stream()
+                .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto).toList();
     }
 
     @Override
     public Optional<CreditCardDto> findCreditCardById(Integer id) {
-        return creditCardJpaDao.findCreditCardById(id).map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto);
+        return creditCardJpaDao.findCreditCardById(id)
+                .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto);
+    }
+
+    @Override
+    public List<CreditCardDto> findAll() {
+        return creditCardJpaDao.findAll().stream()
+                .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto)
+                .toList();
     }
 }

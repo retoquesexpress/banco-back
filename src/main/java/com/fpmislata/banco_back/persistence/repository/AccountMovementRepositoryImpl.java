@@ -35,4 +35,12 @@ public class AccountMovementRepositoryImpl implements AccountMovementRepository 
         return accountMovementJpaDao.findAccountMovementById(idAccountMovement)
                 .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity);
     }
+
+    @Override
+    public List<AccountMovementEntity> findByCreditCardOrigin(String origin) {
+        return accountMovementJpaDao.findByCreditCardOrigin(origin)
+                .stream()
+                .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
+                .toList();
+    }
 }

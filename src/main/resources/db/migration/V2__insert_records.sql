@@ -4,7 +4,7 @@ VALUES
 ('87654321B', 'mgarcia', 'pass456', 'María', 'García', 'Pérez', 'token456'),
 ('11223344C', 'aperez', 'pass789', 'Ana', 'Pérez', NULL, 'token789');
 
-INSERT INTO Account (iban, balance, idClient)
+INSERT INTO Account (iban, balance, id_client)
 VALUES
 ('ES9121000418450200051332', 1500.50, '12345678A'),
 ('ES7921000813610123456789', 250.00, '12345678A'),
@@ -13,14 +13,14 @@ VALUES
 
 
 INSERT INTO AccountMovement
-(idAccountMovement, creditCardOrigin, originMovement, date, amount, movementType, concept)
+(id_account_movement, credit_card_origin, origin_movement, date, amount, movement_type, concept)
 VALUES
-(1, '4111111111111111', 'ATM', '2026-01-01', -100.00, 'WITHDRAWAL', 'Cash withdrawal'),
-(2, '4111111111111111', 'ONLINE', '2026-01-03', -45.99, 'PAYMENT', 'Amazon purchase'),
-(3, '5500000000000004', 'TRANSFER', '2026-01-05', 500.00, 'DEPOSIT', 'Salary');
+(1, '4111111111111111', 'TARJETA_BANCARIA', '2026-01-01', -100.00, 'RETIRAR', 'Cash withdrawal'),
+(2, '4111111111111111', 'DOMICILIACION', '2026-01-03', -45.99, 'DEPOSITAR', 'Amazon purchase'),
+(3, '5500000000000004', 'TRANSFERENCIA', '2026-01-05', 500.00, 'DEPOSITAR', 'Salary');
 
 INSERT INTO CreditCard
-(idCreditCard, cardNumber, expirationDate, cvv, nombreCompleto, idAccount)
+(id_credit_card, card_number, expiration_date, cvv, nombre_completo, id_account)
 VALUES
 (1, '4111111111111111', '2027-12-31', 123, 'Juan López', 'ES9121000418450200051332'),
 (2, '5500000000000004', '2028-06-30', 456, 'María García', 'ES6621000418450200059999'),

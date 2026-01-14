@@ -3,32 +3,23 @@ package com.fpmislata.banco_back.domain.model;
 import java.util.List;
 
 public class Account {
-    private Integer idAccount;
-    private String accountNumber;
+    private String iban;
     private Double balance;
     private Client client;
     private List<CreditCard> creditCards;
+    private List<AccountMovement> accountMovements;
 
-    public Account(Integer idAccount, String accountNumber, Double balance) {
-        this.idAccount = idAccount;
-        this.accountNumber = accountNumber;
+    public Account(String iban, Double balance) {
+        this.iban = iban;
         this.balance = balance;
     }
 
-    public Integer getIdAccount() {
-        return idAccount;
+    public String getIban() {
+        return iban;
     }
 
-    public void setIdAccount(Integer idAccount) {
-        this.idAccount = idAccount;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public Double getBalance() {
@@ -37,5 +28,21 @@ public class Account {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public List<AccountMovement> getAccountMovements() {
+        return accountMovements;
+    }
+
+    public void setAccountMovements(List<AccountMovement> accountMovements) {
+        this.accountMovements = accountMovements;
+    }
+
+    public List<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(List<CreditCard> creditCards) {
+        this.creditCards = creditCards;
     }
 }

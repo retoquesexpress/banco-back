@@ -9,11 +9,8 @@ import java.util.Optional;
 
 public interface CreditCardRepository {
     List<CreditCardDto> findAllCreditCardsByAccount(Account account);
+
     Optional<CreditCardDto> findCreditCardById(Integer id);
-//    pagar
-//    ver cuanto dinero hay
-    //obtener ultimos movimientos
-    //autorizar pago
 
-
+    List<CreditCardDto> findAll();
 }

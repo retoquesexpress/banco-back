@@ -9,6 +9,7 @@ import com.fpmislata.banco_back.persistence.dao.jpa.entity.ClientJpaEntity;
 public class ClientMapper {
 
     private static ClientMapper instance;
+
     private ClientMapper() {
     }
 
@@ -30,8 +31,7 @@ public class ClientMapper {
                 clientJpaEntity.getName(),
                 clientJpaEntity.getSurname1(),
                 clientJpaEntity.getSurname2(),
-                clientJpaEntity.getApiToken()
-        );
+                clientJpaEntity.getApiToken());
     }
 
     public ClientJpaEntity fromClientDtoToClientJpaEntity(ClientDto clientDto) {
@@ -45,8 +45,7 @@ public class ClientMapper {
                 clientDto.name(),
                 clientDto.surname1(),
                 clientDto.surname2(),
-                clientDto.apiToken()
-        );
+                clientDto.apiToken());
     }
 
     public ClientDetailResponse fromClientDtoToClientDetailResponse(ClientDto clientDto) {
@@ -60,10 +59,8 @@ public class ClientMapper {
                 clientDto.name(),
                 clientDto.surname1(),
                 clientDto.surname2(),
-                clientDto.apiToken()
-        );
+                clientDto.apiToken());
     }
-
 
     public ClientEntity fromClientJpaEntityToClientEntity(ClientJpaEntity entity) {
         if (entity == null) {
@@ -76,8 +73,7 @@ public class ClientMapper {
                 entity.getName(),
                 entity.getSurname1(),
                 entity.getSurname2(),
-                entity.getApiToken()
-        );
+                entity.getApiToken());
     }
 
     public ClientDto fromClientEntityToClientDto(ClientEntity clientEntity) {
@@ -91,8 +87,7 @@ public class ClientMapper {
                 clientEntity.name(),
                 clientEntity.surname1(),
                 clientEntity.surname2(),
-                clientEntity.apiToken()
-        );
+                clientEntity.apiToken());
     }
 
     public Client fromClientDtoToClient(ClientDto clientDto) {
@@ -106,8 +101,7 @@ public class ClientMapper {
                 clientDto.name(),
                 clientDto.surname1(),
                 clientDto.surname2(),
-                clientDto.apiToken()
-        );
+                clientDto.apiToken());
     }
 
     public ClientDto fromClientToClientDto(Client client) {
@@ -121,7 +115,48 @@ public class ClientMapper {
                 client.getName(),
                 client.getSurname1(),
                 client.getSurname2(),
-                client.getApiToken()
-        );
+                client.getApiToken());
+    }
+
+    public ClientJpaEntity fromClientEntityToClientJpaEntity(ClientEntity clientEntity) {
+        if (clientEntity == null) {
+            return null;
+        }
+        return new ClientJpaEntity(
+                clientEntity.dni(),
+                clientEntity.userName(),
+                clientEntity.password(),
+                clientEntity.name(),
+                clientEntity.surname1(),
+                clientEntity.surname2(),
+                clientEntity.apiToken());
+    }
+
+    public ClientEntity fromClientToClientEntity(Client client) {
+        if (client == null) {
+            return null;
+        }
+        return new ClientEntity(
+                client.getDni(),
+                client.getUserName(),
+                client.getPassword(),
+                client.getName(),
+                client.getSurname1(),
+                client.getSurname2(),
+                client.getApiToken());
+    }
+
+    public ClientEntity fromClientDtoToClientEntity(ClientDto clientDto) {
+        if (clientDto == null) {
+            return null;
+        }
+        return new ClientEntity(
+                clientDto.dni(),
+                clientDto.userName(),
+                clientDto.password(),
+                clientDto.name(),
+                clientDto.surname1(),
+                clientDto.surname2(),
+                clientDto.apiToken());
     }
 }

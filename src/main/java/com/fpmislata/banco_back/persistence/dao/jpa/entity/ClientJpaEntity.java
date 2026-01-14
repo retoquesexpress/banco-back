@@ -5,16 +5,20 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "client")
+@Table(name = "Client")
 public class ClientJpaEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dni")
     private String dni;
     @Column(name = "user_name")
     private String userName;
+    @Column(name = "password")
     private String password;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname1")
     private String surname1;
+    @Column(name = "surname2")
     private String surname2;
     @Column(name = "api_token")
     private String apiToken;

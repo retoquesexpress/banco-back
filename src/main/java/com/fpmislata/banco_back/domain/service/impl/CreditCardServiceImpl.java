@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 public class CreditCardServiceImpl implements CreditCardService {
 
     private final CreditCardRepository creditCardRepository;
+
     public CreditCardServiceImpl(CreditCardRepository creditCardRepository) {
         this.creditCardRepository = creditCardRepository;
     }
-
 
     @Override
     public List<CreditCardDto> findAllCreditCardsByAccount(Account account) {
         List<CreditCardDto> creditCards = creditCardRepository.findAllCreditCardsByAccount(account);
         if (creditCards.isEmpty()) {
-            throw  new ResourceNotFoundException("Credit Card Not Found");
+            throw new ResourceNotFoundException("Credit Card Not Found");
         }
         return creditCards;
     }
@@ -38,5 +38,10 @@ public class CreditCardServiceImpl implements CreditCardService {
         } else {
             throw new ResourceNotFoundException("Credit Card not found");
         }
+    }
+
+    @Override
+    public List<CreditCardDto> findAll() {
+        return creditCardRepository.findAll();
     }
 }

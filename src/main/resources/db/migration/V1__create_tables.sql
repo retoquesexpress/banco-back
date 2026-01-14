@@ -9,28 +9,28 @@ CREATE TABLE Client (
 );
 
 CREATE TABLE Account (
-     iban VARCHAR(50) NOT NULL,
-     balance DECIMAL(10,2),
-     idClient VARCHAR(9) NOT NULL
+    iban VARCHAR(50) NOT NULL,
+    balance DECIMAL(10,2),
+    id_client VARCHAR(9) NOT NULL
 );
 
 CREATE TABLE AccountMovement (
-    idAccountMovement INT PRIMARY KEY AUTO_INCREMENT,
-    creditCardOrigin VARCHAR(50) NOT NULL,
-    originMovement VARCHAR(50) NOT NULL,
+    id_account_movement INT PRIMARY KEY AUTO_INCREMENT,
+    credit_card_origin VARCHAR(50) NOT NULL,
+    origin_movement VARCHAR(50) NOT NULL,
     date DATE NOT NULL,
     amount DOUBLE NOT NULL,
-    movementType VARCHAR(50) NOT NULL,
+    movement_type VARCHAR(50) NOT NULL,
     concept VARCHAR(50)
 );
 
 CREATE TABLE CreditCard (
-        idCreditCard INT PRIMARY KEY,
-        cardNumber VARCHAR(50) NOT NULL,
-        expirationDate DATE NOT NULL,
-        cvv INT NOT NULL,
-        nombreCompleto VARCHAR(50) NOT NULL,
-        idAccount VARCHAR(50) NOT NULL
+    id_credit_card INT PRIMARY KEY,
+    card_number VARCHAR(50) NOT NULL,
+    expiration_date DATE NOT NULL,
+    cvv INT NOT NULL,
+    nombre_completo VARCHAR(50) NOT NULL,
+    id_account VARCHAR(50) NOT NULL
 );
 
 

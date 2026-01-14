@@ -27,4 +27,13 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
     public Optional<AccountMovementJpaEntity> findAccountMovementById(Integer idAccountMovement) {
         return Optional.ofNullable(entityManager.find(AccountMovementJpaEntity.class, idAccountMovement));
     }
+
+    @Override
+    public List<AccountMovementJpaEntity> findByCreditCardOrigin(String origin) {
+        return entityManager
+                .createQuery("SELECT am FROM AccountMovementJpaEntity am WHERE am.creditCardOrigin = :origin",
+                        AccountMovementJpaEntity.class)
+                .setParameter("origin", origin)
+                .getResultList();
+    }
 }

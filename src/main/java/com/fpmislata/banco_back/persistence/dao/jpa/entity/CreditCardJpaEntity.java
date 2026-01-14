@@ -7,25 +7,35 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "creditCard")
+@Table(name = "creditcard")
 public class CreditCardJpaEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_credit_card")
     private Integer idCreditCard;
+    @Column(name = "card_number")
     private String cardNumber;
+    @Column(name = "expiration_date")
     private String expirationDate;
+    @Column(name = "cvv")
     private Integer cvv;
+    @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    public  CreditCardJpaEntity() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_account")
+    private AccountJpaEntity account;
+
+    public CreditCardJpaEntity() {
     }
 
-    public CreditCardJpaEntity(Integer idCreditCard, String cardNumber, String expirationDate, Integer cvv, String nombreCompleto) {
+    public CreditCardJpaEntity(Integer idCreditCard, String cardNumber, String expirationDate, Integer cvv,
+            String nombreCompleto, AccountJpaEntity account) {
         this.idCreditCard = idCreditCard;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
         this.cvv = cvv;
         this.nombreCompleto = nombreCompleto;
+        this.account = account;
     }
 
     public Integer getIdCreditCard() {
@@ -66,5 +76,13 @@ public class CreditCardJpaEntity implements Serializable {
 
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
+    }
+
+    public AccountJpaEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountJpaEntity account) {
+        this.account = account;
     }
 }
