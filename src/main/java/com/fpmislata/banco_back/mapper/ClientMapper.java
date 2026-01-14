@@ -1,6 +1,8 @@
 package com.fpmislata.banco_back.mapper;
 
 import com.fpmislata.banco_back.controller.webModel.response.ClientDetailResponse;
+import com.fpmislata.banco_back.domain.model.Client;
+import com.fpmislata.banco_back.domain.repository.entity.ClientEntity;
 import com.fpmislata.banco_back.domain.service.dto.ClientDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.ClientJpaEntity;
 
@@ -63,7 +65,63 @@ public class ClientMapper {
     }
 
 
+    public ClientEntity fromClientJpaEntityToClientEntity(ClientJpaEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        return new ClientEntity(
+                entity.getDni(),
+                entity.getUserName(),
+                entity.getPassword(),
+                entity.getName(),
+                entity.getSurname1(),
+                entity.getSurname2(),
+                entity.getApiToken()
+        );
+    }
 
+    public ClientDto fromClientEntityToClientDto(ClientEntity clientEntity) {
+        if (clientEntity == null) {
+            return null;
+        }
+        return new ClientDto(
+                clientEntity.dni(),
+                clientEntity.userName(),
+                clientEntity.password(),
+                clientEntity.name(),
+                clientEntity.surname1(),
+                clientEntity.surname2(),
+                clientEntity.apiToken()
+        );
+    }
 
+    public Client fromClientDtoToClient(ClientDto clientDto) {
+        if (clientDto == null) {
+            return null;
+        }
+        return new Client(
+                clientDto.dni(),
+                clientDto.userName(),
+                clientDto.password(),
+                clientDto.name(),
+                clientDto.surname1(),
+                clientDto.surname2(),
+                clientDto.apiToken()
+        );
+    }
 
+    public ClientDto fromClientToClientDto(Client client) {
+        if (client == null) {
+            return null;
+        }
+        return new ClientDto(
+                client.getDni(),
+                client.getUserName(),
+                client.getPassword(),
+                client.getName(),
+                client.getSurname1(),
+                client.getSurname2(),
+                client.getApiToken()
+        );
+    }
 }

@@ -1,11 +1,11 @@
 CREATE TABLE Client (
     dni VARCHAR(9) PRIMARY KEY,
-    userName VARCHAR(50) NOT NULL,
+    user_name VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
     surname1 VARCHAR(50) NOT NULL,
     surname2 VARCHAR(50),
-    apiToken VARCHAR(50) NOT NULL
+    api_token VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Account (
@@ -32,5 +32,6 @@ CREATE TABLE CreditCard (
         nombreCompleto VARCHAR(50) NOT NULL,
         idAccount VARCHAR(50) NOT NULL
 );
+
 
 

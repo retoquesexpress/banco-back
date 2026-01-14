@@ -1,4 +1,4 @@
-INSERT INTO Client (dni, userName, password, name, surname1, surname2, apiToken)
+INSERT INTO Client (dni, user_name, password, name, surname1, surname2, api_token)
 VALUES
 ('12345678A', 'jlopez', 'pass123', 'Juan', 'López', 'García', 'token123'),
 ('87654321B', 'mgarcia', 'pass456', 'María', 'García', 'Pérez', 'token456'),
@@ -25,3 +25,4 @@ VALUES
 (1, '4111111111111111', '2027-12-31', 123, 'Juan López', 'ES9121000418450200051332'),
 (2, '5500000000000004', '2028-06-30', 456, 'María García', 'ES6621000418450200059999'),
 (3, '340000000000009', '2026-09-30', 789, 'Ana Pérez', 'ES5621014813710123449772');
+

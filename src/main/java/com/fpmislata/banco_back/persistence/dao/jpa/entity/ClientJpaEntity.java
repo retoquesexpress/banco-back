@@ -10,17 +10,20 @@ public class ClientJpaEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String dni;
+    @Column(name = "user_name")
     private String userName;
-    private  String password;
+    private String password;
     private String name;
     private String surname1;
-    private  String surname2;
+    private String surname2;
+    @Column(name = "api_token")
     private String apiToken;
 
     public ClientJpaEntity() {
     }
 
-    public ClientJpaEntity(String dni, String userName, String password, String name, String surname1, String surname2, String apiToken) {
+    public ClientJpaEntity(String dni, String userName, String password, String name, String surname1, String surname2,
+            String apiToken) {
         this.dni = dni;
         this.userName = userName;
         this.password = password;
@@ -85,6 +88,5 @@ public class ClientJpaEntity implements Serializable {
     public void setApiToken(String apiToken) {
         this.apiToken = apiToken;
     }
-
 
 }

@@ -13,11 +13,11 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Override
     public List<ClientJpaEntity> findAllClients() {
-        return entityManager.createQuery("SELECT s FROM ClientJpaEntity c", ClientJpaEntity.class)
-                .getResultList();    }
+        return entityManager.createQuery("SELECT c FROM ClientJpaEntity c", ClientJpaEntity.class)
+                .getResultList();
+    }
 
     @Override
     public Optional<ClientJpaEntity> findClientByDni(String dni) {
@@ -31,7 +31,11 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
 
     @Override
     public Optional<ClientJpaEntity> findClientByUserName(String userName) {
-        return Optional.ofNullable(entityManager.find(ClientJpaEntity.class, userName));
+        return entityManager
+                .createQuery("SELECT c FROM ClientJpaEntity c WHERE c.userName = :userName", ClientJpaEntity.class)
+                .setParameter("userName", userName)
+                .getResultStream()
+                .findFirst();
     }
 
     @Override
@@ -44,9 +48,11 @@ public class ClientJpaDaoImpl implements ClientJpaDao {
 
     @Override
     public ClientJpaEntity create(ClientJpaEntity clientJpaEntity) {
-        return entityManager.merge(clientJpaEntity);    }
+        return entityManager.merge(clientJpaEntity);
+    }
 
     @Override
     public ClientJpaEntity update(ClientJpaEntity clientJpaEntity) {
-        return entityManager.merge(clientJpaEntity);    }
+        return entityManager.merge(clientJpaEntity);
+    }
 }
