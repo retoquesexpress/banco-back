@@ -6,10 +6,9 @@ import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
 
-import java.util.Optional;
-
 public class AccountMapper {
     private static AccountMapper INSTANCE;
+
     private AccountMapper() {
     }
 
@@ -35,7 +34,8 @@ public class AccountMapper {
         }
         return new AccountJpaEntity(
                 accountEntity.iban(),
-                accountEntity.balance());
+                accountEntity.balance(),
+                null); // Note: Manual client assignment might be needed elsewhere
     }
 
     public AccountResponse fromAccountDtoToAccountResponse(AccountDto accountDto) {
@@ -56,15 +56,13 @@ public class AccountMapper {
                 accountRequest.balance());
     }
 
-    public Optional<AccountDto> fromAccountEntityToAccountDto(Optional<AccountEntity> byIban) {
-        if (byIban.isEmpty()) {
-            return Optional.empty();
+    public AccountDto fromAccountEntityToAccountDto(AccountEntity accountEntity) {
+        if (accountEntity == null) {
+            return null;
         }
-        AccountEntity accountEntity = byIban.get();
-        AccountDto accountDto = new AccountDto(
+        return new AccountDto(
                 accountEntity.iban(),
                 accountEntity.balance());
-        return Optional.of(accountDto);
     }
 
     public AccountEntity fromAccountDtoToAccountEntity(AccountDto accountDto) {
