@@ -28,13 +28,15 @@ public class AccountMapper {
         if (accountJpaEntity == null) {
             return null;
         }
+
+        // Movements will be populated separately in the repository layer
+        // by querying AccountMovements where credit_card_origin matches any credit card
+        // from this account
         return new AccountEntity(
                 accountJpaEntity.getIban(),
                 accountJpaEntity.getBalance(),
                 ClientMapper.getInstance().fromClientJpaEntityToClientEntity(accountJpaEntity.getClient()),
-                accountJpaEntity.getAccountMovements().stream()
-                        .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
-                        .toList(),
+                Collections.emptyList(), // Will be populated by repository
                 accountJpaEntity.getCreditCards().stream()
                         .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardEntity)
                         .toList());
@@ -48,9 +50,6 @@ public class AccountMapper {
                 accountEntity.iban(),
                 accountEntity.balance(),
                 ClientMapper.getInstance().fromClientEntityToClientJpaEntity(accountEntity.client()),
-                accountEntity.accountMovements().stream()
-                        .map(AccountMovementMapper.getInstance()::fromAccountMovementEntityToAccountMovementJpaEntity)
-                        .toList(),
                 accountEntity.creditCards().stream()
                         .map(CreditCardMapper.getInstance()::fromCreditCardEntityToCreditCardJpaEntity)
                         .toList());

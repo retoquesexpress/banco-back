@@ -16,10 +16,6 @@ public class AccountJpaEntity {
     @JoinColumn(name = "id_client")
     private ClientJpaEntity client;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "credit_card_origin")
-    private java.util.List<AccountMovementJpaEntity> accountMovements;
-
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private java.util.List<CreditCardJpaEntity> creditCards;
 
@@ -27,12 +23,10 @@ public class AccountJpaEntity {
     }
 
     public AccountJpaEntity(String iban, Double balance, ClientJpaEntity client,
-            java.util.List<AccountMovementJpaEntity> accountMovements,
             java.util.List<CreditCardJpaEntity> creditCards) {
         this.iban = iban;
         this.balance = balance;
         this.client = client;
-        this.accountMovements = accountMovements;
         this.creditCards = creditCards;
     }
 
@@ -58,14 +52,6 @@ public class AccountJpaEntity {
 
     public void setClient(ClientJpaEntity client) {
         this.client = client;
-    }
-
-    public java.util.List<AccountMovementJpaEntity> getAccountMovements() {
-        return accountMovements;
-    }
-
-    public void setAccountMovements(java.util.List<AccountMovementJpaEntity> accountMovements) {
-        this.accountMovements = accountMovements;
     }
 
     public java.util.List<CreditCardJpaEntity> getCreditCards() {

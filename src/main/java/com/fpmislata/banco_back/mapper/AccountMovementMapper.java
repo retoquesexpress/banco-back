@@ -1,6 +1,7 @@
 package com.fpmislata.banco_back.mapper;
 
 import com.fpmislata.banco_back.controller.webModel.response.AccountMovementDetailResponse;
+import com.fpmislata.banco_back.domain.model.AccountMovement;
 import com.fpmislata.banco_back.domain.repository.entity.AccountMovementEntity;
 import com.fpmislata.banco_back.domain.service.dto.AccountMovementDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountMovementJpaEntity;
@@ -62,12 +63,12 @@ public class AccountMovementMapper {
                 accountMovementDto.concept());
     }
 
-    public com.fpmislata.banco_back.domain.model.AccountMovement fromAccountMovementDtoToAccountMovement(
+    public AccountMovement fromAccountMovementDtoToAccountMovement(
             AccountMovementDto accountMovementDto) {
         if (accountMovementDto == null) {
             return null;
         }
-        return new com.fpmislata.banco_back.domain.model.AccountMovement(
+        return new AccountMovement(
                 accountMovementDto.idAccountMovement(),
                 accountMovementDto.creditCardOrigin(),
                 accountMovementDto.originMovement(),

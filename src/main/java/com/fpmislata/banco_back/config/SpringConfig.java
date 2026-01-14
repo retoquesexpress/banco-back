@@ -36,8 +36,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpringConfig {
 
     @Bean
-    public AccountRepository accountRepository(AccountJpaDao accountJpaDao) {
-        return new AccountRepositoryImpl(accountJpaDao);
+    public AccountRepository accountRepository(AccountJpaDao accountJpaDao,
+            AccountMovementJpaDao accountMovementJpaDao) {
+        return new AccountRepositoryImpl(accountJpaDao, accountMovementJpaDao);
     }
 
     @Bean
