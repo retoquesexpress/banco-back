@@ -15,14 +15,12 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Override
     public List<CreditCardJpaEntity> findAllCreditCardsByAccount(Account account) {
         return entityManager.createQuery(
-                        "SELECT c FROM CreditCardJpaEntity c WHERE c.account = :account",
-                        CreditCardJpaEntity.class
-                )
-                .setParameter("account", account)
+                "SELECT c FROM CreditCardJpaEntity c WHERE c.account.iban = :iban",
+                CreditCardJpaEntity.class)
+                .setParameter("iban", account.getIban())
                 .getResultList();
     }
 

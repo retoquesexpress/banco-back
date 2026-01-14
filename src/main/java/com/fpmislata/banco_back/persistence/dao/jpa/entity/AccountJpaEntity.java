@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "account")
+@Table(name = "Account")
 public class AccountJpaEntity {
     @Id
+    @Column(name = "iban")
     private String iban;
-    @Column
+    @Column(name = "balance")
     private Double balance;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,23 +10,31 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 import com.fpmislata.banco_back.domain.model.enums.MovementType;
 import com.fpmislata.banco_back.domain.model.enums.OriginMovement;
 
 @Entity
-@Table
+@Table(name = "accountmovement")
 public class AccountMovementJpaEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_account_movement")
     private Integer idAccountMovement;
+    @Column(name = "credit_card_origin")
     private String creditCardOrigin;
     @Enumerated(EnumType.STRING)
+    @Column(name = "origin_movement")
     private OriginMovement originMovement;
+    @Column(name = "date")
     private Date date;
+    @Column(name = "amount")
     private Double amount;
     @Enumerated(EnumType.STRING)
+    @Column(name = "movement_type")
     private MovementType movementType;
+    @Column(name = "concept")
     private String concept;
 
     public AccountMovementJpaEntity() {

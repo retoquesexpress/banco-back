@@ -73,4 +73,13 @@ public class AccountMapper {
                 accountDto.iban(),
                 accountDto.balance());
     }
+
+    public com.fpmislata.banco_back.domain.model.Account fromAccountDtoToAccount(AccountDto accountDto) {
+        if (accountDto == null) {
+            return null;
+        }
+        return new com.fpmislata.banco_back.domain.model.Account(
+                accountDto.iban(),
+                accountDto.balance());
+    }
 }

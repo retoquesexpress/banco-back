@@ -14,7 +14,7 @@ import com.fpmislata.banco_back.domain.service.AccountMovementService;
 import com.fpmislata.banco_back.mapper.AccountMovementMapper;
 
 @RestController
-@RequestMapping("/api/movement")
+@RequestMapping("/api/movements")
 public class AccountMovementController {
     private final AccountMovementService accountMovementService;
 
@@ -23,20 +23,21 @@ public class AccountMovementController {
     }
 
     @GetMapping
-    public ResponseEntity<AccountMovementDetailResponse> getAllAccountMovements() {
+    public ResponseEntity<List<AccountMovementDetailResponse>> getAllAccountMovements() {
         List<AccountMovementDetailResponse> accountMovements = accountMovementService.findAllAccountMovements()
                 .stream()
                 .map(AccountMovementMapper.getInstance()::fromAccountMovementDtoToAccountResponse)
                 .toList();
-        return new ResponseEntity(accountMovements, HttpStatus.OK);
+        return new ResponseEntity<>(accountMovements, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountMovementDetailResponse> getAccountMovementById(@PathVariable Integer id) {
-        AccountMovementDetailResponse accountMovement = accountMovementService.findAccountMovementById(id)
-                .map(AccountMovementMapper.getInstance()::fromAccountMovementDtoToAccountResponse)
-                .orElse(null);
-        return new ResponseEntity(accountMovement, HttpStatus.OK);
+        return accountMovementService.findAccountMovementById(id)
+                .map(accountMovementDto -> new ResponseEntity<>(
+                        AccountMovementMapper.getInstance().fromAccountMovementDtoToAccountResponse(accountMovementDto),
+                        HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }

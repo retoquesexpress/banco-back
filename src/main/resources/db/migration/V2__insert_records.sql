@@ -15,9 +15,9 @@ VALUES
 INSERT INTO AccountMovement
 (id_account_movement, credit_card_origin, origin_movement, date, amount, movement_type, concept)
 VALUES
-(1, '4111111111111111', 'ATM', '2026-01-01', -100.00, 'WITHDRAWAL', 'Cash withdrawal'),
-(2, '4111111111111111', 'ONLINE', '2026-01-03', -45.99, 'PAYMENT', 'Amazon purchase'),
-(3, '5500000000000004', 'TRANSFER', '2026-01-05', 500.00, 'DEPOSIT', 'Salary');
+(1, '4111111111111111', 'TARJETA_BANCARIA', '2026-01-01', -100.00, 'RETIRAR', 'Cash withdrawal'),
+(2, '4111111111111111', 'DOMICILIACION', '2026-01-03', -45.99, 'DEPOSITAR', 'Amazon purchase'),
+(3, '5500000000000004', 'TRANSFERENCIA', '2026-01-05', 500.00, 'DEPOSITAR', 'Salary');
 
 INSERT INTO CreditCard
 (id_credit_card, card_number, expiration_date, cvv, nombre_completo, id_account)

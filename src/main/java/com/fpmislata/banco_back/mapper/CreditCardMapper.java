@@ -6,6 +6,7 @@ import com.fpmislata.banco_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 
 public class CreditCardMapper {
     private static CreditCardMapper instance;
+
     private CreditCardMapper() {
     }
 
@@ -25,8 +26,7 @@ public class CreditCardMapper {
                 creditCardJpaEntity.getCardNumber(),
                 creditCardJpaEntity.getExpirationDate(),
                 creditCardJpaEntity.getCvv(),
-                creditCardJpaEntity.getNombreCompleto()
-        );
+                creditCardJpaEntity.getNombreCompleto());
     }
 
     public CreditCardJpaEntity fromCreditCardDtoToCreditCardJpaEntity(CreditCardDto creditCardDto) {
@@ -38,8 +38,8 @@ public class CreditCardMapper {
                 creditCardDto.cardNumber(),
                 creditCardDto.expirationDate(),
                 creditCardDto.cvv(),
-                creditCardDto.nombreCompleto()
-        );
+                creditCardDto.nombreCompleto(),
+                null);
     }
 
     public CreditCardDetailResponse fromCreditCardDtoToCreditCardDetailResponse(CreditCardDto creditCardDto) {
@@ -51,8 +51,7 @@ public class CreditCardMapper {
                 creditCardDto.cardNumber(),
                 creditCardDto.expirationDate(),
                 creditCardDto.cvv(),
-                creditCardDto.nombreCompleto()
-        );
+                creditCardDto.nombreCompleto());
     }
 
 }
