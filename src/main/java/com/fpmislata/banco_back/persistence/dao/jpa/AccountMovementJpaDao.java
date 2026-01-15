@@ -15,4 +15,6 @@ public interface AccountMovementJpaDao {
     List<AccountMovementJpaEntity> findByCreditCardOrigin(String origin);
 
     List<AccountMovementJpaEntity> findAllMovementsByAccount(String iban);
+
+    void insert(AccountMovementJpaEntity accountMovementJpaEntity);
 }

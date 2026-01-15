@@ -1,17 +1,19 @@
 package com.fpmislata.banco_back.domain.model;
 
+import java.time.LocalDate;
+
 public class CreditCard {
     private Integer idCreditCard;
     private String cardNumber;
-    private String expirationDate;
+    private LocalDate expirationDate;
     private Integer cvv;
     private String nombreCompleto;
-    //idAccount
 
     public CreditCard() {
     }
 
-    public CreditCard(Integer idCreditCard, String cardNumber, String expirationDate, Integer cvv, String nombreCompleto) {
+    public CreditCard(Integer idCreditCard, String cardNumber, LocalDate expirationDate, Integer cvv,
+            String nombreCompleto) {
         this.idCreditCard = idCreditCard;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
@@ -35,11 +37,11 @@ public class CreditCard {
         this.cardNumber = cardNumber;
     }
 
-    public String getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 

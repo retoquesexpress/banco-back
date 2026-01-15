@@ -20,10 +20,11 @@ public interface AccountRepository {
     AccountEntity getByIban(String iban);
 
     Optional<AccountEntity> findByIban(String iban);
+
     Optional<AccountEntity> findAccountByCreditCard(CreditCardEntity creditCardEntity);
 
-    AccountEntity depositMoney(AccountEntity accountEntity, Double amount, String concept);
-    AccountEntity withdrawMoney(AccountEntity accountEntity, Double amount, String concept);
+    AccountEntity depositMoney(AccountEntity accountEntity, Double amount, String concept, String cardNumber);
 
+    AccountEntity withdrawMoney(AccountEntity accountEntity, Double amount, String concept, String cardNumber);
 
 }

@@ -1,9 +1,9 @@
 package com.fpmislata.banco_back.domain.service.impl;
 
-import com.fpmislata.banco_back.domain.model.Client;
 import com.fpmislata.banco_back.domain.repository.ClientRepository;
 import com.fpmislata.banco_back.domain.service.ClientService;
 import com.fpmislata.banco_back.domain.service.dto.ClientDto;
+import com.fpmislata.banco_back.exception.BusinessException;
 import com.fpmislata.banco_back.exception.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 
@@ -12,12 +12,11 @@ import java.util.Optional;
 
 public class ClientServiceImpl implements ClientService {
 
-
     private final ClientRepository clientRepository;
+
     public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
-
 
     @Override
     public List<ClientDto> findAllClients() {
@@ -31,7 +30,8 @@ public class ClientServiceImpl implements ClientService {
             return client;
         } else {
             throw new ResourceNotFoundException("Client not found");
-        }       }
+        }
+    }
 
     @Override
     public Optional<ClientDto> getClientByDni(String dni) {
@@ -39,7 +39,8 @@ public class ClientServiceImpl implements ClientService {
         if (client.isEmpty()) {
             throw new ResourceNotFoundException("Client not found");
         }
-        return Optional.of(client.get());    }
+        return Optional.of(client.get());
+    }
 
     @Override
     public Optional<ClientDto> findClientByUserName(String userName) {
@@ -48,7 +49,8 @@ public class ClientServiceImpl implements ClientService {
             return client;
         } else {
             throw new ResourceNotFoundException("Client not found");
-        }     }
+        }
+    }
 
     @Transactional
     @Override
@@ -56,7 +58,7 @@ public class ClientServiceImpl implements ClientService {
         Optional<ClientDto> user = clientRepository.findClientByDni(dni);
         if (user.isPresent()) {
             clientRepository.delete(dni);
-        } else  {
+        } else {
             throw new ResourceNotFoundException("Client does not exists");
         }
     }
@@ -68,7 +70,8 @@ public class ClientServiceImpl implements ClientService {
         if (client.isEmpty()) {
             throw new ResourceNotFoundException("Service not found");
         }
-        return clientRepository.create(clientDto);       }
+        return clientRepository.create(clientDto);
+    }
 
     @Transactional
     @Override
@@ -77,5 +80,18 @@ public class ClientServiceImpl implements ClientService {
         if (client.isEmpty()) {
             throw new ResourceNotFoundException("Service not found");
         }
-        return clientRepository.update(clientDto);      }
+        return clientRepository.update(clientDto);
+    }
+
+    @Override
+    public void validate(String userName, String apiToken) {
+        Optional<ClientDto> client = clientRepository.findClientByUserName(userName);
+        if (client.isEmpty()) {
+            throw new ResourceNotFoundException("Client not found");
+        }
+        if (!client.get().apiToken().equals(apiToken)) {
+            throw new ResourceNotFoundException("Invalid api token");
+        }
+
+    }
 }

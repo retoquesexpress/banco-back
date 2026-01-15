@@ -56,7 +56,7 @@ public class CreditCardMapper {
                 creditCardDto.nombreCompleto());
     }
 
- public CreditCardEntity fromCreditCardJpaEntityToCreditCardEntity(
+    public CreditCardEntity fromCreditCardJpaEntityToCreditCardEntity(
             CreditCardJpaEntity creditCardJpaEntity) {
         if (creditCardJpaEntity == null) {
             return null;
@@ -82,7 +82,6 @@ public class CreditCardMapper {
                 creditCardEntity.nombreCompleto(),
                 null);
     }
-
 
     public CreditCardDto fromCreditCardEntityToCreditCardDto(
             CreditCardEntity creditCardEntity) {

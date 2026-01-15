@@ -9,10 +9,16 @@ import java.util.Optional;
 
 public interface ClientJpaDao {
     List<ClientJpaEntity> findAllClients();
+
     Optional<ClientJpaEntity> findClientByDni(String dni);
+
     Optional<ClientJpaEntity> getClientByDni(String dni);
+
     Optional<ClientJpaEntity> findClientByUserName(String userName);
+
     void delete(String dni);
+
     ClientJpaEntity create(ClientJpaEntity clientJpaEntity);
+
     ClientJpaEntity update(ClientJpaEntity clientJpaEntity);
 }

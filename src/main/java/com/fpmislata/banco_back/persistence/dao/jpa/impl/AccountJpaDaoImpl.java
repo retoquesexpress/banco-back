@@ -55,7 +55,8 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
     @Override
     public Optional<AccountJpaEntity> findAccountByCreditCard(CreditCardJpaEntity creditCardJpaEntity) {
         return entityManager
-                .createQuery("SELECT a FROM AccountJpaEntity a WHERE a.creditCard = :creditCard", AccountJpaEntity.class)
+                .createQuery("SELECT a FROM AccountJpaEntity a JOIN a.creditCards c WHERE c = :creditCard",
+                        AccountJpaEntity.class)
                 .setParameter("creditCard", creditCardJpaEntity)
                 .getResultStream()
                 .findFirst();
@@ -75,6 +76,5 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
     public AccountJpaEntity withdrawMoney(AccountJpaEntity accountJpaEntity, Double amount, String concept) {
         return entityManager.merge(accountJpaEntity);
     }
-
 
 }

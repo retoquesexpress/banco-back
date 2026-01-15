@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "creditcard")
@@ -15,7 +16,7 @@ public class CreditCardJpaEntity implements Serializable {
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "expiration_date")
-    private String expirationDate;
+    private LocalDate expirationDate;
     @Column(name = "cvv")
     private Integer cvv;
     @Column(name = "nombre_completo")
@@ -28,7 +29,7 @@ public class CreditCardJpaEntity implements Serializable {
     public CreditCardJpaEntity() {
     }
 
-    public CreditCardJpaEntity(Integer idCreditCard, String cardNumber, String expirationDate, Integer cvv,
+    public CreditCardJpaEntity(Integer idCreditCard, String cardNumber, LocalDate expirationDate, Integer cvv,
             String nombreCompleto, AccountJpaEntity account) {
         this.idCreditCard = idCreditCard;
         this.cardNumber = cardNumber;
@@ -54,11 +55,11 @@ public class CreditCardJpaEntity implements Serializable {
         this.cardNumber = cardNumber;
     }
 
-    public String getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 
