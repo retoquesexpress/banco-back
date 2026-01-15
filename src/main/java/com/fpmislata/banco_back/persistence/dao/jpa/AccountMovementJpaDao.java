@@ -13,4 +13,6 @@ public interface AccountMovementJpaDao {
     Optional<AccountMovementJpaEntity> findAccountMovementById(Integer idAccountMovement);
 
     List<AccountMovementJpaEntity> findByCreditCardOrigin(String origin);
+
+    List<AccountMovementJpaEntity> findAllMovementsByAccount(String iban);
 }

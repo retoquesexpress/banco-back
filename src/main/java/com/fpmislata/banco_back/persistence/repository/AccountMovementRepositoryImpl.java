@@ -43,4 +43,12 @@ public class AccountMovementRepositoryImpl implements AccountMovementRepository 
                 .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
                 .toList();
     }
+
+    @Override
+    public List<AccountMovementEntity> findAllMovementsByAccount(String iban) {
+        return accountMovementJpaDao.findAllMovementsByAccount(iban)
+                .stream()
+                .map(AccountMovementMapper.getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
+                .toList();
+    }
 }

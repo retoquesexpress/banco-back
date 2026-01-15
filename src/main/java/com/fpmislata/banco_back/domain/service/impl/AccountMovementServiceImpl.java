@@ -40,4 +40,11 @@ public class AccountMovementServiceImpl implements AccountMovementService {
         return accountMovementRepository.findAccountMovementById(idAccountMovement)
                 .map(AccountMovementMapper.getInstance()::fromAccountMovementEntityToAccountDto);
     }
+
+    @Override
+    public List<AccountMovementDto> findAllMovementsByAccount(String iban) {
+        return accountMovementRepository.findAllMovementsByAccount(iban).stream()
+                .map(AccountMovementMapper.getInstance()::fromAccountMovementEntityToAccountDto)
+                .toList();
+    }
 }
