@@ -109,11 +109,11 @@ public AccountDto withdrawMoney(AccountDto accountDto, Double amount, String con
     return AccountMapper.getInstance().fromAccountEntityToAccountDto(savedEntity);
 }
 
-private void validateConcept(String concept) {
-    if (concept == null || concept.trim().isEmpty() && concept.length() < 3) {
-        throw new BusinessException("El concepto no puede ser null ni menor de 3 caracteres");
+    private void validateConcept(String concept) {
+        if (concept == null || concept.trim().length() < 3) {
+            throw new BusinessException("El concepto no puede ser null ni menor de 3 caracteres");
+        }
     }
-}
 
 
 }
