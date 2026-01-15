@@ -15,6 +15,6 @@ public interface CreditCardService {
     Optional<CreditCardDto> findCreditCardById(Integer id);
 
     List<CreditCardDto> findAll();
-    // CreditCardDto create(Account account, CreditCardDto creditCardDto);
 
+    void validate(CreditCardDto origen);
 }

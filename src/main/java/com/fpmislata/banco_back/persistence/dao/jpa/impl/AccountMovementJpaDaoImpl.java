@@ -46,4 +46,9 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
                 .setParameter("iban", iban)
                 .getResultList();
     }
+
+    @Override
+    public void insert(AccountMovementJpaEntity accountMovementJpaEntity) {
+        entityManager.persist(accountMovementJpaEntity);
+    }
 }

@@ -19,7 +19,8 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public List<ClientDto> findAllClients() {
-        return clientJpaDao.findAllClients().stream().map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto).toList();
+        return clientJpaDao.findAllClients().stream().map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto)
+                .toList();
     }
 
     @Override
@@ -30,11 +31,13 @@ public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public Optional<ClientDto> getClientByDni(String dni) {
         return clientJpaDao.findClientByDni(dni)
-                .map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto);    }
+                .map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto);
+    }
 
     @Override
     public Optional<ClientDto> findClientByUserName(String userName) {
-        return clientJpaDao.findClientByUserName(userName).map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto);
+        return clientJpaDao.findClientByUserName(userName)
+                .map(ClientMapper.getInstance()::fromClientJpaEntityToClientDto);
     }
 
     @Override
@@ -62,6 +65,6 @@ public class ClientRepositoryImpl implements ClientRepository {
         existingEntity.setApiToken(clientDto.apiToken());
 
         ClientJpaEntity updatedEntity = clientJpaDao.update(existingEntity);
-        return  ClientMapper.getInstance().fromClientJpaEntityToClientDto(updatedEntity);
+        return ClientMapper.getInstance().fromClientJpaEntityToClientDto(updatedEntity);
     }
 }

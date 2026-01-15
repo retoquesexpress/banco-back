@@ -8,10 +8,16 @@ import java.util.Optional;
 
 public interface ClientRepository {
     List<ClientDto> findAllClients();
+
     Optional<ClientDto> findClientByDni(String dni);
+
     Optional<ClientDto> getClientByDni(String dni);
+
     Optional<ClientDto> findClientByUserName(String userName);
+
     void delete(String dni);
+
     ClientDto create(ClientDto clientDto);
+
     ClientDto update(ClientDto clientDto);
 }

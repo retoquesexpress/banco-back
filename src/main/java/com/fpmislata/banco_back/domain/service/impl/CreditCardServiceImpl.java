@@ -1,14 +1,12 @@
 package com.fpmislata.banco_back.domain.service.impl;
 
-import com.fpmislata.banco_back.domain.model.Account;
-import com.fpmislata.banco_back.domain.model.CreditCard;
-import com.fpmislata.banco_back.domain.repository.ClientRepository;
 import com.fpmislata.banco_back.domain.repository.CreditCardRepository;
 import com.fpmislata.banco_back.domain.service.CreditCardService;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
-import com.fpmislata.banco_back.domain.service.dto.ClientDto;
 import com.fpmislata.banco_back.domain.service.dto.CreditCardDto;
 import com.fpmislata.banco_back.exception.ResourceNotFoundException;
+
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +39,26 @@ public class CreditCardServiceImpl implements CreditCardService {
         }
     }
 
-
     @Override
     public List<CreditCardDto> findAll() {
         return creditCardRepository.findAll();
+    }
+
+    @Override
+    public void validate(CreditCardDto origen) {
+        CreditCardDto creditCardDto = creditCardRepository.findCreditCardById(origen.idCreditCard())
+                .orElseThrow(() -> new ResourceNotFoundException("Credit Card not found"));
+        if (creditCardDto.expirationDate().isBefore(LocalDate.now())) {
+            throw new ResourceNotFoundException("Credit Card has expired");
+        }
+        if (!creditCardDto.cvv().equals(origen.cvv())) {
+            throw new ResourceNotFoundException("Invalid CVV");
+        }
+        if (!creditCardDto.cardNumber().equals(origen.cardNumber())) {
+            throw new ResourceNotFoundException("Invalid Card Number");
+        }
+        if (!creditCardDto.nombreCompleto().equals(origen.nombreCompleto())) {
+            throw new ResourceNotFoundException("Invalid Holder Name");
+        }
     }
 }
