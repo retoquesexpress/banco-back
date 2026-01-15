@@ -14,4 +14,6 @@ public interface AccountMovementRepository {
     Optional<AccountMovementEntity> findAccountMovementById(Integer idAccountMovement);
 
     List<AccountMovementEntity> findByCreditCardOrigin(String origin);
+
+    List<AccountMovementEntity> findAllMovementsByAccount(String iban);
 }

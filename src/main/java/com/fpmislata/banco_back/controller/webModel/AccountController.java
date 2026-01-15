@@ -1,17 +1,10 @@
 package com.fpmislata.banco_back.controller.webModel;
 
-import com.fpmislata.banco_back.controller.webModel.request.AccountRequest;
-import com.fpmislata.banco_back.controller.webModel.request.PagoTarjetaRequest;
 import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
-import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
 import com.fpmislata.banco_back.domain.service.AccountService;
 import com.fpmislata.banco_back.domain.service.ClientService;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
 import com.fpmislata.banco_back.domain.service.dto.PagoDto;
-
-import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
-import com.fpmislata.banco_back.domain.service.AccountService;
-import com.fpmislata.banco_back.domain.service.ClientService;
 
 import com.fpmislata.banco_back.mapper.AccountMapper;
 import com.fpmislata.banco_back.mapper.ClientMapper;
@@ -24,79 +17,79 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
-    private final AccountService accountService;
-    private final ClientService clientService;
+        private final AccountService accountService;
+        private final ClientService clientService;
 
-    public AccountController(AccountService accountService, ClientService clientService) {
-        this.accountService = accountService;
-        this.clientService = clientService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AccountResponse>> findByClient(@RequestParam(required = false) String dni) {
-        if (dni == null || dni.isBlank()) {
-            List<AccountResponse> accounts = accountService.findAll()
-                    .stream()
-                    .map(AccountMapper.getInstance()::fromAccountDtoToAccountResponse)
-                    .toList();
-            return new ResponseEntity<>(accounts, HttpStatus.OK);
+        public AccountController(AccountService accountService, ClientService clientService) {
+                this.accountService = accountService;
+                this.clientService = clientService;
         }
 
-        return clientService.getClientByDni(dni)
-                .map(clientDto -> {
-                    List<AccountResponse> accounts = accountService
-                            .findByClient(ClientMapper.getInstance().fromClientDtoToClient(clientDto))
-                            .stream()
-                            .map(AccountMapper.getInstance()::fromAccountDtoToAccountResponse)
-                            .toList();
-                    return new ResponseEntity<>(accounts, HttpStatus.OK);
-                })
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+        @GetMapping
+        public ResponseEntity<List<AccountResponse>> findByClient(@RequestParam(required = false) String dni) {
+                if (dni == null || dni.isBlank()) {
+                        List<AccountResponse> accounts = accountService.findAll()
+                                        .stream()
+                                        .map(AccountMapper.getInstance()::fromAccountDtoToAccountResponse)
+                                        .toList();
+                        return new ResponseEntity<>(accounts, HttpStatus.OK);
+                }
 
-    @GetMapping("/{iban}")
-    public ResponseEntity<AccountResponse> getByIban(@PathVariable String iban) {
-        AccountResponse accountResponse = AccountMapper.getInstance()
-                .fromAccountDtoToAccountResponse(accountService.getByIban(iban));
-        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
-    }
+                return clientService.getClientByDni(dni)
+                                .map(clientDto -> {
+                                        List<AccountResponse> accounts = accountService
+                                                        .findByClient(ClientMapper.getInstance()
+                                                                        .fromClientDtoToClient(clientDto))
+                                                        .stream()
+                                                        .map(AccountMapper
+                                                                        .getInstance()::fromAccountDtoToAccountResponse)
+                                                        .toList();
+                                        return new ResponseEntity<>(accounts, HttpStatus.OK);
+                                })
+                                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
 
-    @PostMapping("/{iban}/deposit")
-    public ResponseEntity<AccountResponse> depositMoney(
-            @PathVariable String iban,
-            @RequestBody PagoDto pagoDto
-    ) {
+        @GetMapping("/{iban}")
+        public ResponseEntity<AccountResponse> getByIban(@PathVariable String iban) {
+                AccountResponse accountResponse = AccountMapper.getInstance()
+                                .fromAccountDtoToAccountResponse(accountService.getByIban(iban));
+                return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+        }
 
-        AccountDto accountDto = accountService.getByIban(iban);
+        @PostMapping("/{iban}/deposit")
+        public ResponseEntity<AccountResponse> depositMoney(
+                        @PathVariable String iban,
+                        @RequestBody PagoDto pagoDto) {
 
-        AccountDto updatedAccount = accountService.depositMoney(
-                accountDto,
-                pagoDto.importe(),
-                pagoDto.concept()
-        );
+                AccountDto accountDto = accountService.getByIban(iban);
 
-        AccountResponse accountResponse = AccountMapper.getInstance()
-                .fromAccountDtoToAccountResponse(updatedAccount);
-        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
-    }
+                AccountDto updatedAccount = accountService.depositMoney(
+                                accountDto,
+                                pagoDto.importe(),
+                                pagoDto.concept(),
+                                null);
 
-    @PostMapping("/{iban}/withdraw")
-    public ResponseEntity<AccountResponse> withdrawMoney(
-            @PathVariable String iban,
-            @RequestBody PagoDto pagoDto
-    ) {
+                AccountResponse accountResponse = AccountMapper.getInstance()
+                                .fromAccountDtoToAccountResponse(updatedAccount);
+                return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+        }
 
-        AccountDto accountDto = accountService.getByIban(iban);
+        @PostMapping("/{iban}/withdraw")
+        public ResponseEntity<AccountResponse> withdrawMoney(
+                        @PathVariable String iban,
+                        @RequestBody PagoDto pagoDto) {
 
-        AccountDto updatedAccount = accountService.withdrawMoney(
-                accountDto,
-                pagoDto.importe(),
-                pagoDto.concept()
-        );
+                AccountDto accountDto = accountService.getByIban(iban);
 
-        AccountResponse accountResponse = AccountMapper.getInstance()
-                .fromAccountDtoToAccountResponse(updatedAccount);
-        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
-    }
+                AccountDto updatedAccount = accountService.withdrawMoney(
+                                accountDto,
+                                pagoDto.importe(),
+                                pagoDto.concept(),
+                                null);
+
+                AccountResponse accountResponse = AccountMapper.getInstance()
+                                .fromAccountDtoToAccountResponse(updatedAccount);
+                return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+        }
 
 }

@@ -14,4 +14,6 @@ public interface ClientService {
     void delete(String dni);
     ClientDto create(ClientDto clientDto);
     ClientDto update(ClientDto clientDto);
+
+    void validate(String userName, String apiToken);
 }

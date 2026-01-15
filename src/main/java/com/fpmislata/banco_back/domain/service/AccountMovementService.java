@@ -7,6 +7,10 @@ import java.util.Optional;
 
 public interface AccountMovementService {
     List<AccountMovementDto> findAllAccountMovements();
+
     AccountMovementDto getAccountMovementById(Integer idAccountMovement);
+
     Optional<AccountMovementDto> findAccountMovementById(Integer idAccountMovement);
+
+    List<AccountMovementDto> findAllMovementsByAccount(String iban);
 }

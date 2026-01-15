@@ -36,4 +36,19 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
                 .setParameter("origin", origin)
                 .getResultList();
     }
+
+    @Override
+    public List<AccountMovementJpaEntity> findAllMovementsByAccount(String iban) {
+        return entityManager
+                .createQuery(
+                        "SELECT am FROM AccountMovementJpaEntity am JOIN CreditCardJpaEntity cc ON am.creditCardOrigin = cc.cardNumber WHERE cc.account.iban = :iban",
+                        AccountMovementJpaEntity.class)
+                .setParameter("iban", iban)
+                .getResultList();
+    }
+
+    @Override
+    public void insert(AccountMovementJpaEntity accountMovementJpaEntity) {
+        entityManager.persist(accountMovementJpaEntity);
+    }
 }

@@ -2,21 +2,20 @@ package com.fpmislata.banco_back.domain.repository.entity;
 
 import com.fpmislata.banco_back.domain.model.Client;
 
+import java.time.LocalDate;
+
 public record CreditCardEntity(
         Integer idCreditCard,
         String cardNumber,
-        String expirationDate,
+        LocalDate expirationDate,
         Integer cvv,
-        String nombreCompleto
-) {
+        String nombreCompleto) {
     public CreditCardEntity(
             Integer idCreditCard,
             String cardNumber,
-            String expirationDate,
+            LocalDate expirationDate,
             Integer cvv,
-            String nombreCompleto
-    )
-    {
+            String nombreCompleto) {
         this.idCreditCard = idCreditCard;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;

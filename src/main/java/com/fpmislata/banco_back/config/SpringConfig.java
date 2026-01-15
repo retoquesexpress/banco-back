@@ -8,6 +8,7 @@ import com.fpmislata.banco_back.domain.service.AccountMovementService;
 import com.fpmislata.banco_back.domain.service.AccountService;
 import com.fpmislata.banco_back.domain.service.ClientService;
 import com.fpmislata.banco_back.domain.service.CreditCardService;
+import com.fpmislata.banco_back.domain.service.PagoTarjetaService;
 import com.fpmislata.banco_back.domain.service.impl.AccountMovementServiceImpl;
 import com.fpmislata.banco_back.domain.service.impl.AccountServiceImpl;
 import com.fpmislata.banco_back.domain.repository.AuthRepository;
@@ -15,6 +16,7 @@ import com.fpmislata.banco_back.domain.service.AuthService;
 import com.fpmislata.banco_back.domain.service.impl.AuthServiceImpl;
 import com.fpmislata.banco_back.domain.service.impl.ClientServiceImpl;
 import com.fpmislata.banco_back.domain.service.impl.CreditCardServiceImpl;
+import com.fpmislata.banco_back.domain.service.impl.PagoTarjetaServiceImpl;
 import com.fpmislata.banco_back.persistence.PersistenceConfig;
 import com.fpmislata.banco_back.persistence.dao.jpa.AccountJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.AccountMovementJpaDao;
@@ -34,7 +36,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @Import(PersistenceConfig.class)
 public class SpringConfig {
-
 
     @Bean
     public AccountRepository accountRepository(AccountJpaDao accountJpaDao,
@@ -85,6 +86,12 @@ public class SpringConfig {
     @Bean
     public AuthRepository authRepository(ClientJpaDao clientJpaDao) {
         return new AuthRepositoryImpl(clientJpaDao);
+    }
+
+    @Bean
+    public PagoTarjetaService pagoTarjetaService(ClientService clientService, AccountService accountService,
+            CreditCardService creditCardService) {
+        return new PagoTarjetaServiceImpl(clientService, accountService, creditCardService);
     }
 
     @Bean

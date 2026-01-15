@@ -31,8 +31,6 @@ public class AccountMapper {
             return null;
         }
 
-
-
         return new AccountEntity(
                 accountJpaEntity.getIban(),
                 accountJpaEntity.getBalance(),
@@ -125,7 +123,9 @@ public class AccountMapper {
                 accountDto.balance(),
                 ClientMapper.getInstance().fromClientDtoToClientEntity(accountDto.client()),
                 Collections.emptyList(),
-                Collections.emptyList());
+                accountDto.creditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardDtoToCreditCardEntity)
+                        .toList());
     }
 
     public Account fromAccountDtoToAccount(AccountDto accountDto) {

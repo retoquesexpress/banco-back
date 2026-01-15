@@ -40,4 +40,13 @@ public class AccountMovementController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/account/{iban}")
+    public ResponseEntity<List<AccountMovementDetailResponse>> findAllMovementsByAccount(@PathVariable String iban) {
+        List<AccountMovementDetailResponse> accountMovements = accountMovementService.findAllMovementsByAccount(iban)
+                .stream()
+                .map(AccountMovementMapper.getInstance()::fromAccountMovementDtoToAccountResponse)
+                .toList();
+        return new ResponseEntity<>(accountMovements, HttpStatus.OK);
+    }
+
 }
