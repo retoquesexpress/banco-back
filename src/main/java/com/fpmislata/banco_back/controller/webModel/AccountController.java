@@ -1,8 +1,18 @@
 package com.fpmislata.banco_back.controller.webModel;
 
+import com.fpmislata.banco_back.controller.webModel.request.AccountRequest;
+import com.fpmislata.banco_back.controller.webModel.request.PagoTarjetaRequest;
+import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
+import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
+import com.fpmislata.banco_back.domain.service.AccountService;
+import com.fpmislata.banco_back.domain.service.ClientService;
+import com.fpmislata.banco_back.domain.service.dto.AccountDto;
+import com.fpmislata.banco_back.domain.service.dto.PagoDto;
+
 import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
 import com.fpmislata.banco_back.domain.service.AccountService;
 import com.fpmislata.banco_back.domain.service.ClientService;
+
 import com.fpmislata.banco_back.mapper.AccountMapper;
 import com.fpmislata.banco_back.mapper.ClientMapper;
 import org.springframework.http.HttpStatus;
@@ -48,6 +58,44 @@ public class AccountController {
     public ResponseEntity<AccountResponse> getByIban(@PathVariable String iban) {
         AccountResponse accountResponse = AccountMapper.getInstance()
                 .fromAccountDtoToAccountResponse(accountService.getByIban(iban));
+        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/{iban}/deposit")
+    public ResponseEntity<AccountResponse> depositMoney(
+            @PathVariable String iban,
+            @RequestBody PagoDto pagoDto
+    ) {
+
+        AccountDto accountDto = accountService.getByIban(iban);
+
+        AccountDto updatedAccount = accountService.depositMoney(
+                accountDto,
+                pagoDto.importe(),
+                pagoDto.concept()
+        );
+
+        AccountResponse accountResponse = AccountMapper.getInstance()
+                .fromAccountDtoToAccountResponse(updatedAccount);
+        return new ResponseEntity<>(accountResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/{iban}/withdraw")
+    public ResponseEntity<AccountResponse> withdrawMoney(
+            @PathVariable String iban,
+            @RequestBody PagoDto pagoDto
+    ) {
+
+        AccountDto accountDto = accountService.getByIban(iban);
+
+        AccountDto updatedAccount = accountService.withdrawMoney(
+                accountDto,
+                pagoDto.importe(),
+                pagoDto.concept()
+        );
+
+        AccountResponse accountResponse = AccountMapper.getInstance()
+                .fromAccountDtoToAccountResponse(updatedAccount);
         return new ResponseEntity<>(accountResponse, HttpStatus.OK);
     }
 

@@ -92,4 +92,18 @@ public class AccountMovementMapper {
                 accountMovementEntity.movementType(),
                 accountMovementEntity.concept());
     }
+
+    public AccountMovementDto fromAccountMovementToAccountMovementDto(AccountMovement accountMovement) {
+        if (accountMovement == null) {
+            return null;
+        }
+        return new AccountMovementDto(
+                accountMovement.getIdAccountMovement(),
+                accountMovement.getCreditCardOrigin(),
+                accountMovement.getOriginMovement(),
+                accountMovement.getDate(),
+                accountMovement.getAmount(),
+                accountMovement.getMovementType(),
+                accountMovement.getConcept());
+    }
 }

@@ -1,5 +1,17 @@
 package com.fpmislata.banco_back.persistence.repository;
 
+import com.fpmislata.banco_back.domain.model.enums.MovementType;
+import com.fpmislata.banco_back.domain.model.enums.OriginMovement;
+import com.fpmislata.banco_back.domain.repository.AccountRepository;
+import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
+import com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity;
+import com.fpmislata.banco_back.domain.repository.entity.ClientEntity;
+import com.fpmislata.banco_back.mapper.AccountMapper;
+import com.fpmislata.banco_back.mapper.ClientMapper;
+import com.fpmislata.banco_back.mapper.CreditCardMapper;
+import com.fpmislata.banco_back.persistence.dao.jpa.AccountJpaDao;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountMovementJpaEntity;
 import com.fpmislata.banco_back.domain.repository.AccountRepository;
 import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
 import com.fpmislata.banco_back.domain.repository.entity.AccountMovementEntity;
@@ -10,11 +22,15 @@ import com.fpmislata.banco_back.mapper.ClientMapper;
 import com.fpmislata.banco_back.persistence.dao.jpa.AccountJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.AccountMovementJpaDao;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public class AccountRepositoryImpl implements AccountRepository {
     private final AccountJpaDao accountJpaDao;
+
     private final AccountMovementJpaDao accountMovementJpaDao;
 
     public AccountRepositoryImpl(AccountJpaDao accountJpaDao, AccountMovementJpaDao accountMovementJpaDao) {
@@ -26,17 +42,16 @@ public class AccountRepositoryImpl implements AccountRepository {
     public List<AccountEntity> findAll() {
         return accountJpaDao.findAll()
                 .stream()
+
                 .map(accountJpaEntity -> {
                     AccountEntity account = AccountMapper.getInstance()
                             .fromAccountJpaEntityToAccountEntity(accountJpaEntity);
-                    // Fetch movements for all credit cards of this account
                     List<AccountMovementEntity> movements = accountJpaEntity.getCreditCards().stream()
                             .flatMap(creditCard -> accountMovementJpaDao
                                     .findByCreditCardOrigin(creditCard.getCardNumber()).stream())
                             .map(AccountMovementMapper
                                     .getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
                             .toList();
-                    // Create new AccountEntity with movements
                     return new AccountEntity(account.iban(), account.balance(), account.client(), movements,
                             account.creditCards());
                 })
@@ -48,17 +63,16 @@ public class AccountRepositoryImpl implements AccountRepository {
         return accountJpaDao
                 .findByClient(ClientMapper.getInstance().fromClientEntityToClientJpaEntity(client))
                 .stream()
+
                 .map(accountJpaEntity -> {
                     AccountEntity account = AccountMapper.getInstance()
                             .fromAccountJpaEntityToAccountEntity(accountJpaEntity);
-                    // Fetch movements for all credit cards of this account
                     List<AccountMovementEntity> movements = accountJpaEntity.getCreditCards().stream()
                             .flatMap(creditCard -> accountMovementJpaDao
                                     .findByCreditCardOrigin(creditCard.getCardNumber()).stream())
                             .map(AccountMovementMapper
                                     .getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
                             .toList();
-                    // Create new AccountEntity with movements
                     return new AccountEntity(account.iban(), account.balance(), account.client(), movements,
                             account.creditCards());
                 })
@@ -68,17 +82,16 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public AccountEntity getByIban(String iban) {
         return accountJpaDao.findByIban(iban)
+
                 .map(accountJpaEntity -> {
                     AccountEntity account = AccountMapper.getInstance()
                             .fromAccountJpaEntityToAccountEntity(accountJpaEntity);
-                    // Fetch movements for all credit cards of this account
                     List<AccountMovementEntity> movements = accountJpaEntity.getCreditCards().stream()
                             .flatMap(creditCard -> accountMovementJpaDao
                                     .findByCreditCardOrigin(creditCard.getCardNumber()).stream())
                             .map(AccountMovementMapper
                                     .getInstance()::fromAccountMovementJpaEntityToAccountMovementEntity)
                             .toList();
-                    // Create new AccountEntity with movements
                     return new AccountEntity(account.iban(), account.balance(), account.client(), movements,
                             account.creditCards());
                 })
@@ -103,5 +116,49 @@ public class AccountRepositoryImpl implements AccountRepository {
                             account.creditCards());
                 });
     }
+
+
+    @Override
+    public Optional<AccountEntity> findAccountByCreditCard(CreditCardEntity creditCardEntity) {
+        return accountJpaDao.findAccountByCreditCard(CreditCardMapper.getInstance().fromCreditCardEntityToCreditCardJpaEntity(creditCardEntity))
+                .map(AccountMapper.getInstance()::fromAccountJpaEntityToAccountEntity);
+    }
+
+    @Override
+    public AccountEntity depositMoney(AccountEntity accountEntity, Double amount, String concept) {
+
+        accountEntity.depositMoney(amount);
+
+        AccountMovementJpaEntity accountMovementJpaEntity = new AccountMovementJpaEntity();
+        accountMovementJpaEntity.setAmount(amount);
+        accountMovementJpaEntity.setConcept(concept);
+        accountMovementJpaEntity.setOriginMovement(OriginMovement.TARJETA_BANCARIA);
+        accountMovementJpaEntity.setMovementType(MovementType.DEPOSITAR);
+        accountMovementJpaEntity.setDate(new Date());
+
+        var accountJpa = AccountMapper.getInstance().fromAccountEntityToAccountJpaEntity(accountEntity);
+        var updatedAccountJpa = accountJpaDao.save(accountJpa);
+
+        return AccountMapper.getInstance().fromAccountJpaEntityToAccountEntity(updatedAccountJpa);
+
+      }
+
+    @Override
+    public AccountEntity withdrawMoney(AccountEntity accountEntity, Double amount, String concept) {
+        accountEntity.withdrawMoney(amount);
+
+        AccountMovementJpaEntity accountMovementJpaEntity = new AccountMovementJpaEntity();
+        accountMovementJpaEntity.setAmount(amount);
+        accountMovementJpaEntity.setConcept(concept);
+        accountMovementJpaEntity.setOriginMovement(OriginMovement.TARJETA_BANCARIA);
+        accountMovementJpaEntity.setMovementType(MovementType.RETIRAR);
+        accountMovementJpaEntity.setDate(new Date());
+
+        var accountJpa = AccountMapper.getInstance().fromAccountEntityToAccountJpaEntity(accountEntity);
+        var updatedAccountJpa = accountJpaDao.save(accountJpa);
+
+        return AccountMapper.getInstance().fromAccountJpaEntityToAccountEntity(updatedAccountJpa);    }
+
+
 
 }

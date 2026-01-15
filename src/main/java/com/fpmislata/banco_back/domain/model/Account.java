@@ -1,5 +1,8 @@
 package com.fpmislata.banco_back.domain.model;
 
+import com.fpmislata.banco_back.exception.BusinessException;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Account {
@@ -29,6 +32,35 @@ public class Account {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+
+
+
+    public void depositMoney(Double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("El importe no puede ser inferior a cero");
+        }
+        this.balance = this.balance += amount;
+    }
+
+    public void withdrawMoney(Double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("El importe no puede ser inferior a cero");
+        }
+        if (this.balance < amount) {
+            throw new BusinessException("Saldo insuficiente");
+        }
+        this.balance = this.balance -= amount;
+    }
+
 
     public List<AccountMovement> getAccountMovements() {
         return accountMovements;

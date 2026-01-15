@@ -1,6 +1,8 @@
 package com.fpmislata.banco_back.mapper;
 
 import com.fpmislata.banco_back.controller.webModel.response.CreditCardDetailResponse;
+import com.fpmislata.banco_back.domain.model.CreditCard;
+import com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity;
 import com.fpmislata.banco_back.domain.service.dto.CreditCardDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 
@@ -54,12 +56,12 @@ public class CreditCardMapper {
                 creditCardDto.nombreCompleto());
     }
 
-    public com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity fromCreditCardJpaEntityToCreditCardEntity(
+ public CreditCardEntity fromCreditCardJpaEntityToCreditCardEntity(
             CreditCardJpaEntity creditCardJpaEntity) {
         if (creditCardJpaEntity == null) {
             return null;
         }
-        return new com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity(
+        return new CreditCardEntity(
                 creditCardJpaEntity.getIdCreditCard(),
                 creditCardJpaEntity.getCardNumber(),
                 creditCardJpaEntity.getExpirationDate(),
@@ -68,7 +70,7 @@ public class CreditCardMapper {
     }
 
     public CreditCardJpaEntity fromCreditCardEntityToCreditCardJpaEntity(
-            com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity creditCardEntity) {
+            CreditCardEntity creditCardEntity) {
         if (creditCardEntity == null) {
             return null;
         }
@@ -81,8 +83,9 @@ public class CreditCardMapper {
                 null);
     }
 
+
     public CreditCardDto fromCreditCardEntityToCreditCardDto(
-            com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity creditCardEntity) {
+            CreditCardEntity creditCardEntity) {
         if (creditCardEntity == null) {
             return null;
         }
@@ -94,12 +97,12 @@ public class CreditCardMapper {
                 creditCardEntity.nombreCompleto());
     }
 
-    public com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity fromCreditCardDtoToCreditCardEntity(
+    public CreditCardEntity fromCreditCardDtoToCreditCardEntity(
             CreditCardDto creditCardDto) {
         if (creditCardDto == null) {
             return null;
         }
-        return new com.fpmislata.banco_back.domain.repository.entity.CreditCardEntity(
+        return new CreditCardEntity(
                 creditCardDto.idCreditCard(),
                 creditCardDto.cardNumber(),
                 creditCardDto.expirationDate(),
@@ -107,16 +110,28 @@ public class CreditCardMapper {
                 creditCardDto.nombreCompleto());
     }
 
-    public com.fpmislata.banco_back.domain.model.CreditCard fromCreditCardDtoToCreditCard(
+    public CreditCard fromCreditCardDtoToCreditCard(
             CreditCardDto creditCardDto) {
         if (creditCardDto == null) {
             return null;
         }
-        return new com.fpmislata.banco_back.domain.model.CreditCard(
+        return new CreditCard(
                 creditCardDto.idCreditCard(),
                 creditCardDto.cardNumber(),
                 creditCardDto.expirationDate(),
                 creditCardDto.cvv(),
                 creditCardDto.nombreCompleto());
+    }
+
+    public CreditCardDto fromCreditCardToCreditCardDto(CreditCard creditCard) {
+        if (creditCard == null) {
+            return null;
+        }
+        return new CreditCardDto(
+                creditCard.getIdCreditCard(),
+                creditCard.getCardNumber(),
+                creditCard.getExpirationDate(),
+                creditCard.getCvv(),
+                creditCard.getNombreCompleto());
     }
 }

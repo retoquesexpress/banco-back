@@ -35,6 +35,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Import(PersistenceConfig.class)
 public class SpringConfig {
 
+
     @Bean
     public AccountRepository accountRepository(AccountJpaDao accountJpaDao,
             AccountMovementJpaDao accountMovementJpaDao) {

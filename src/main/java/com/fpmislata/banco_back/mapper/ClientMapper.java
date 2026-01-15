@@ -144,6 +144,7 @@ public class ClientMapper {
                 client.getSurname1(),
                 client.getSurname2(),
                 client.getApiToken());
+
     }
 
     public ClientEntity fromClientDtoToClientEntity(ClientDto clientDto) {

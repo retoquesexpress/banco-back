@@ -1,5 +1,10 @@
 package com.fpmislata.banco_back.persistence.dao.jpa.impl;
 
+import com.fpmislata.banco_back.exception.BusinessException;
+import com.fpmislata.banco_back.persistence.dao.jpa.AccountJpaDao;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.ClientJpaEntity;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 import com.fpmislata.banco_back.persistence.dao.jpa.AccountJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.ClientJpaEntity;
@@ -16,6 +21,7 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
 
     @Override
     public List<AccountJpaEntity> findByClient(ClientJpaEntity client) {
+
         List<AccountJpaEntity> accounts = entityManager
                 .createQuery(
                         "SELECT DISTINCT a FROM AccountJpaEntity a LEFT JOIN FETCH a.creditCards WHERE a.client = :client",
@@ -45,5 +51,30 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
     public Optional<AccountJpaEntity> findByIban(String iban) {
         return Optional.ofNullable(entityManager.find(AccountJpaEntity.class, iban));
     }
+
+    @Override
+    public Optional<AccountJpaEntity> findAccountByCreditCard(CreditCardJpaEntity creditCardJpaEntity) {
+        return entityManager
+                .createQuery("SELECT a FROM AccountJpaEntity a WHERE a.creditCard = :creditCard", AccountJpaEntity.class)
+                .setParameter("creditCard", creditCardJpaEntity)
+                .getResultStream()
+                .findFirst();
+    }
+
+    @Override
+    public AccountJpaEntity save(AccountJpaEntity accountJpaEntity) {
+        return entityManager.merge(accountJpaEntity);
+    }
+
+    @Override
+    public AccountJpaEntity depositMoney(AccountJpaEntity accountJpaEntity, Double amount, String concept) {
+        return entityManager.merge(accountJpaEntity);
+    }
+
+    @Override
+    public AccountJpaEntity withdrawMoney(AccountJpaEntity accountJpaEntity, Double amount, String concept) {
+        return entityManager.merge(accountJpaEntity);
+    }
+
 
 }
