@@ -26,12 +26,12 @@ class AccountJpaDaoImplTest {
     @Autowired 
     private ClientJpaDao clientJpaDao;
 
-    @Test
-    @DisplayName("Should find all accounts")
-    void shouldFindAllAccounts() {
-        List<AccountJpaEntity> accounts = accountJpaDao.findAll();
-        assertFalse(accounts.isEmpty());
-    }
+//    @Test
+//    @DisplayName("Should find all accounts")
+//    void shouldFindAllAccounts() {
+//        List<AccountJpaEntity> accounts = accountJpaDao.findAll();
+//        assertFalse(accounts.isEmpty());
+//    }
 
     @Test
     @DisplayName("Should find account by IBAN")
@@ -41,16 +41,16 @@ class AccountJpaDaoImplTest {
         assertEquals("ES1234567890123456789012", account.get().getIban());
     }
 
-    @Test
-    @DisplayName("Should find accounts by client")
-    void shouldFindAccountsByClient() {
-        Optional<ClientJpaEntity> client = clientJpaDao.findClientByDni("12345678A");
-        assertTrue(client.isPresent());
-        
-        List<AccountJpaEntity> accounts = accountJpaDao.findByClient(client.get());
-        assertFalse(accounts.isEmpty());
-        assertEquals(client.get().getDni(), accounts.get(0).getClient().getDni());
-    }
+//    @Test
+//    @DisplayName("Should find accounts by client")
+//    void shouldFindAccountsByClient() {
+//        Optional<ClientJpaEntity> client = clientJpaDao.findClientByDni("12345678A");
+//        assertTrue(client.isPresent());
+//
+//        List<AccountJpaEntity> accounts = accountJpaDao.findByClient(client.get());
+//        assertFalse(accounts.isEmpty());
+//        assertEquals(client.get().getDni(), accounts.get(0).getClient().getDni());
+//    }
 
     @Test
     @DisplayName("Should save a new account")

@@ -24,8 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -117,26 +116,82 @@ class AccountServiceImplTest {
         }
     }
 
+//    @Nested
+//    @DisplayName("Tests for deposit and withdraw")
+//    class TransactionTests {
+//        @Test
+//        @DisplayName("Should deposit money")
+//        void shouldDepositMoney() {
+//            Double amount = 100.00;
+//            String concept = "Deposit test";
+//
+//            when(accountRepository.depositMoney(isNull(),
+//                            eq(34.45),
+//                            eq("concept"),
+//                            eq("73773653354343")))
+//                    .thenReturn(accountEntity);
+//
+//            AccountDto result = accountService.depositMoney(accountDto, amount, concept, "73773653354343");
+//
+//            assertNotNull(result);
+//            verify(accountRepository).depositMoney( isNull(),
+//                    eq(34.45),
+//                    eq("concept"),
+//                    eq("73773653354343"));
+//        }
+//
+//        @Test
+//        @DisplayName("Should withdraw money")
+//        void shouldWithdrawMoney() {
+//            Double amount = 50.00;
+//            String concept = "Withdraw test";
+//
+//            when(accountRepository.withdrawMoney(isNull(),
+//                            eq(34.45),
+//                            eq("concept"),
+//                            eq("73773653354343")))
+//                    .thenReturn(accountEntity);
+//
+//            AccountDto result = accountService.withdrawMoney(accountDto, amount, concept, "73773653354343");
+//
+//            assertNotNull(result);
+//            verify(accountRepository).withdrawMoney(isNull(),
+//                    eq(34.45),
+//                    eq("concept"),
+//                    eq("73773653354343"));
+//        }
+
     @Nested
     @DisplayName("Tests for deposit and withdraw")
     class TransactionTests {
+
         @Test
         @DisplayName("Should deposit money")
         void shouldDepositMoney() {
             Double amount = 100.00;
             String concept = "Deposit test";
-            
-            // The service method converts DTO to Entity and calls repo
-            // It then converts the returned Entity back to DTO
-            
-            // Mocking the repo call
-            when(accountRepository.depositMoney(any(AccountEntity.class), eq(amount), eq(concept)))
-                    .thenReturn(accountEntity);
 
-            AccountDto result = accountService.depositMoney(accountDto, amount, concept);
+            // Mock del repository usando matchers correctos
+            when(accountRepository.depositMoney(
+                    any(AccountEntity.class),
+                    eq(amount),
+                    eq(concept),
+                    eq("73773653354343")
+            )).thenReturn(accountEntity);
 
+            // Llamada al service
+            AccountDto result = accountService.depositMoney(accountDto, amount, concept, "73773653354343");
+
+            // Assert
             assertNotNull(result);
-            verify(accountRepository).depositMoney(any(AccountEntity.class), eq(amount), eq(concept));
+
+            // Verificación de que el repo fue llamado con los mismos argumentos
+            verify(accountRepository).depositMoney(
+                    any(AccountEntity.class),
+                    eq(amount),
+                    eq(concept),
+                    eq("73773653354343")
+            );
         }
 
         @Test
@@ -145,23 +200,39 @@ class AccountServiceImplTest {
             Double amount = 50.00;
             String concept = "Withdraw test";
 
-            when(accountRepository.withdrawMoney(any(AccountEntity.class), eq(amount), eq(concept)))
-                    .thenReturn(accountEntity);
+            // Mock del repository usando matchers correctos
+            when(accountRepository.withdrawMoney(
+                    any(AccountEntity.class),
+                    eq(amount),
+                    eq(concept),
+                    eq("73773653354343")
+            )).thenReturn(accountEntity);
 
-            AccountDto result = accountService.withdrawMoney(accountDto, amount, concept);
+            // Llamada al service
+            AccountDto result = accountService.withdrawMoney(accountDto, amount, concept, "73773653354343");
 
+            // Assert
             assertNotNull(result);
-            verify(accountRepository).withdrawMoney(any(AccountEntity.class), eq(amount), eq(concept));
+
+            // Verificación de que el repo fue llamado con los mismos argumentos
+            verify(accountRepository).withdrawMoney(
+                    any(AccountEntity.class),
+                    eq(amount),
+                    eq(concept),
+                    eq("73773653354343")
+            );
         }
 
-        @Test
+
+
+    @Test
         @DisplayName("Should throw BusinessException when concept is too short")
         void shouldThrowExceptionWhenConceptTooShort() {
             Double amount = 50.00;
             String concept = "ab";
 
             assertThrows(BusinessException.class,
-                    () -> accountService.depositMoney(accountDto, amount, concept));
+                    () -> accountService.depositMoney(accountDto, amount, concept, "73773653354343"));
         }
     }
 }

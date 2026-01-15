@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,89 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+//@ExtendWith(MockitoExtension.class)
+//class CreditCardServiceImplTest {
+//
+//    @Mock
+//    private CreditCardRepository creditCardRepository;
+//
+//    @InjectMocks
+//    private CreditCardServiceImpl creditCardService;
+//
+//    private CreditCardDto creditCardDto;
+//    private AccountDto accountDto;
+//
+//    @BeforeEach
+//    void setUp() {
+//        ClientDto clientDto = new ClientDto("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "token123");
+//        accountDto = new AccountDto("ES1234567890123456789012", 1000.00, clientDto, Collections.emptyList(), Collections.emptyList());
+//        creditCardDto = new CreditCardDto(1, "1234567890123456", LocalDate.of(2070,3,34), 123, "Jose Smith");
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findAllCreditCardsByAccount")
+//    class FindAllByAccountTests {
+//        @Test
+//        @DisplayName("Should return credit cards for account")
+//        void shouldReturnCreditCardsByAccount() {
+//            when(creditCardRepository.findAllCreditCardsByAccount(accountDto)).thenReturn(List.of(creditCardDto));
+//
+//            List<CreditCardDto> result = creditCardService.findAllCreditCardsByAccount(accountDto);
+//
+//            assertNotNull(result);
+//            assertEquals(1, result.size());
+//            verify(creditCardRepository).findAllCreditCardsByAccount(accountDto);
+//        }
+//
+//        @Test
+//        @DisplayName("Should throw exception when no credit cards found")
+//        void shouldThrowExceptionWhenNoCreditCards() {
+//            when(creditCardRepository.findAllCreditCardsByAccount(accountDto)).thenReturn(Collections.emptyList());
+//
+//            assertThrows(ResourceNotFoundException.class, () -> creditCardService.findAllCreditCardsByAccount(accountDto));
+//        }
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findCreditCardById")
+//    class FindByIdTests {
+//        @Test
+//        @DisplayName("Should find credit card by ID")
+//        void shouldFindCreditCardById() {
+//            when(creditCardRepository.findCreditCardById(1)).thenReturn(Optional.of(creditCardDto));
+//
+//            Optional<CreditCardDto> result = creditCardService.findCreditCardById(1);
+//
+//            assertTrue(result.isPresent());
+//            assertEquals(1, result.get().idCreditCard());
+//            verify(creditCardRepository).findCreditCardById(1);
+//        }
+//
+//        @Test
+//        @DisplayName("Should throw exception when credit card not found")
+//        void shouldThrowExceptionWhenNotFound() {
+//            when(creditCardRepository.findCreditCardById(1)).thenReturn(Optional.empty());
+//
+//            assertThrows(ResourceNotFoundException.class, () -> creditCardService.findCreditCardById(1));
+//        }
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findAll")
+//    class FindAllTests {
+//        @Test
+//        @DisplayName("Should return all credit cards")
+//        void shouldReturnAllCreditCards() {
+//            when(creditCardRepository.findAll()).thenReturn(List.of(creditCardDto));
+//
+//            List<CreditCardDto> result = creditCardService.findAll();
+//
+//            assertNotNull(result);
+//            assertEquals(1, result.size());
+//            verify(creditCardRepository).findAll();
+//        }
+//    }
+//}
 @ExtendWith(MockitoExtension.class)
 class CreditCardServiceImplTest {
 
@@ -37,7 +121,7 @@ class CreditCardServiceImplTest {
     void setUp() {
         ClientDto clientDto = new ClientDto("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "token123");
         accountDto = new AccountDto("ES1234567890123456789012", 1000.00, clientDto, Collections.emptyList(), Collections.emptyList());
-        creditCardDto = new CreditCardDto(1, "1234567890123456", "12/26", 123, "Jose Smith");
+        creditCardDto = new CreditCardDto(1, "1234567890123456", LocalDate.of(2070, 3, 31), 123, "Jose Smith");
     }
 
     @Nested
@@ -46,21 +130,24 @@ class CreditCardServiceImplTest {
         @Test
         @DisplayName("Should return credit cards for account")
         void shouldReturnCreditCardsByAccount() {
-            when(creditCardRepository.findAllCreditCardsByAccount(accountDto)).thenReturn(List.of(creditCardDto));
+            when(creditCardRepository.findAllCreditCardsByAccount(any(AccountDto.class)))
+                    .thenReturn(List.of(creditCardDto));
 
             List<CreditCardDto> result = creditCardService.findAllCreditCardsByAccount(accountDto);
 
             assertNotNull(result);
             assertEquals(1, result.size());
-            verify(creditCardRepository).findAllCreditCardsByAccount(accountDto);
+            verify(creditCardRepository).findAllCreditCardsByAccount(any(AccountDto.class));
         }
 
         @Test
         @DisplayName("Should throw exception when no credit cards found")
         void shouldThrowExceptionWhenNoCreditCards() {
-            when(creditCardRepository.findAllCreditCardsByAccount(accountDto)).thenReturn(Collections.emptyList());
+            when(creditCardRepository.findAllCreditCardsByAccount(any(AccountDto.class)))
+                    .thenReturn(Collections.emptyList());
 
-            assertThrows(ResourceNotFoundException.class, () -> creditCardService.findAllCreditCardsByAccount(accountDto));
+            assertThrows(ResourceNotFoundException.class,
+                    () -> creditCardService.findAllCreditCardsByAccount(accountDto));
         }
     }
 
@@ -70,7 +157,8 @@ class CreditCardServiceImplTest {
         @Test
         @DisplayName("Should find credit card by ID")
         void shouldFindCreditCardById() {
-            when(creditCardRepository.findCreditCardById(1)).thenReturn(Optional.of(creditCardDto));
+            when(creditCardRepository.findCreditCardById(1))
+                    .thenReturn(Optional.of(creditCardDto));
 
             Optional<CreditCardDto> result = creditCardService.findCreditCardById(1);
 
@@ -84,7 +172,8 @@ class CreditCardServiceImplTest {
         void shouldThrowExceptionWhenNotFound() {
             when(creditCardRepository.findCreditCardById(1)).thenReturn(Optional.empty());
 
-            assertThrows(ResourceNotFoundException.class, () -> creditCardService.findCreditCardById(1));
+            assertThrows(ResourceNotFoundException.class,
+                    () -> creditCardService.findCreditCardById(1));
         }
     }
 

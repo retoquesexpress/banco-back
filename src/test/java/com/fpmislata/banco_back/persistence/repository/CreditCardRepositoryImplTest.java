@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,82 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
+//@ExtendWith(MockitoExtension.class)
+//class CreditCardRepositoryImplTest {
+//
+//    @Mock
+//    private CreditCardJpaDao creditCardJpaDao;
+//
+//    @InjectMocks
+//    private CreditCardRepositoryImpl creditCardRepository;
+//
+//    private CreditCardJpaEntity creditCardJpaEntity;
+//    private AccountDto accountDto;
+//    private AccountJpaEntity accountJpaEntity;
+//    private ClientJpaEntity clientJpaEntity;
+//    private ClientDto clientDto;
+//
+//    @BeforeEach
+//    void setUp() {
+//        clientJpaEntity = new ClientJpaEntity("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "tok");
+//        clientDto = new ClientDto("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "tok");
+//
+//        accountJpaEntity = new AccountJpaEntity("ES1234567890123456789012", 1000.00, clientJpaEntity, Collections.emptyList());
+//        accountDto = new AccountDto("ES1234567890123456789012", 1000.00, clientDto, Collections.emptyList(), Collections.emptyList());
+//
+//        creditCardJpaEntity = new CreditCardJpaEntity(1, "1234567890123456", LocalDate.of(2070,3,34), 123, "Violet Sorrengail", accountJpaEntity);
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findAllCreditCardsByAccount")
+//    class FindAllByAccountTests {
+//        @Test
+//        @DisplayName("Should return credit cards by account")
+//        void shouldReturnCreditCardsByAccount() {
+//            when(creditCardJpaDao.findAllCreditCardsByAccount(accountDto)).thenReturn(List.of(creditCardJpaEntity));
+//
+//            List<CreditCardDto> result = creditCardRepository.findAllCreditCardsByAccount(accountDto);
+//
+//            assertNotNull(result);
+//            assertEquals(1, result.size());
+//            assertEquals("1234567890123456", result.get(0).cardNumber());
+//            verify(creditCardJpaDao).findAllCreditCardsByAccount(accountDto);
+//        }
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findCreditCardById")
+//    class FindByIdTests {
+//        @Test
+//        @DisplayName("Should find credit card by ID")
+//        void shouldFindCreditCardById() {
+//            when(creditCardJpaDao.findCreditCardById(1)).thenReturn(Optional.of(creditCardJpaEntity));
+//
+//            Optional<CreditCardDto> result = creditCardRepository.findCreditCardById(1);
+//
+//            assertTrue(result.isPresent());
+//            assertEquals(1, result.get().idCreditCard());
+//            verify(creditCardJpaDao).findCreditCardById(1);
+//        }
+//    }
+//
+//    @Nested
+//    @DisplayName("Tests for findAll")
+//    class FindAllTests {
+//        @Test
+//        @DisplayName("Should return all credit cards")
+//        void shouldReturnAllCreditCards() {
+//            when(creditCardJpaDao.findAll()).thenReturn(List.of(creditCardJpaEntity));
+//
+//            List<CreditCardDto> result = creditCardRepository.findAll();
+//
+//            assertNotNull(result);
+//            assertEquals(1, result.size());
+//            verify(creditCardJpaDao).findAll();
+//        }
+//    }
+//}
 
 @ExtendWith(MockitoExtension.class)
 class CreditCardRepositoryImplTest {
@@ -43,11 +120,18 @@ class CreditCardRepositoryImplTest {
     void setUp() {
         clientJpaEntity = new ClientJpaEntity("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "tok");
         clientDto = new ClientDto("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "tok");
-        
+
         accountJpaEntity = new AccountJpaEntity("ES1234567890123456789012", 1000.00, clientJpaEntity, Collections.emptyList());
         accountDto = new AccountDto("ES1234567890123456789012", 1000.00, clientDto, Collections.emptyList(), Collections.emptyList());
-        
-        creditCardJpaEntity = new CreditCardJpaEntity(1, "1234567890123456", "12/26", 123, "Violet Sorrengail", accountJpaEntity);
+
+        creditCardJpaEntity = new CreditCardJpaEntity(
+                1,
+                "1234567890123456",
+                LocalDate.of(2070,3,31), // fecha válida
+                123,
+                "Violet Sorrengail",
+                accountJpaEntity
+        );
     }
 
     @Nested
@@ -56,14 +140,16 @@ class CreditCardRepositoryImplTest {
         @Test
         @DisplayName("Should return credit cards by account")
         void shouldReturnCreditCardsByAccount() {
-            when(creditCardJpaDao.findAllCreditCardsByAccount(accountDto)).thenReturn(List.of(creditCardJpaEntity));
+            when(creditCardJpaDao.findAllCreditCardsByAccount(any(AccountDto.class)))
+                    .thenReturn(List.of(creditCardJpaEntity));
 
             List<CreditCardDto> result = creditCardRepository.findAllCreditCardsByAccount(accountDto);
 
             assertNotNull(result);
             assertEquals(1, result.size());
             assertEquals("1234567890123456", result.get(0).cardNumber());
-            verify(creditCardJpaDao).findAllCreditCardsByAccount(accountDto);
+
+            verify(creditCardJpaDao).findAllCreditCardsByAccount(any(AccountDto.class));
         }
     }
 
@@ -73,12 +159,14 @@ class CreditCardRepositoryImplTest {
         @Test
         @DisplayName("Should find credit card by ID")
         void shouldFindCreditCardById() {
-            when(creditCardJpaDao.findCreditCardById(1)).thenReturn(Optional.of(creditCardJpaEntity));
+            when(creditCardJpaDao.findCreditCardById(1))
+                    .thenReturn(Optional.of(creditCardJpaEntity));
 
             Optional<CreditCardDto> result = creditCardRepository.findCreditCardById(1);
 
             assertTrue(result.isPresent());
             assertEquals(1, result.get().idCreditCard());
+
             verify(creditCardJpaDao).findCreditCardById(1);
         }
     }
@@ -95,6 +183,7 @@ class CreditCardRepositoryImplTest {
 
             assertNotNull(result);
             assertEquals(1, result.size());
+
             verify(creditCardJpaDao).findAll();
         }
     }

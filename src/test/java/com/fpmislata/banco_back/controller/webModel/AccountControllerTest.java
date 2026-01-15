@@ -21,8 +21,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -89,8 +88,12 @@ class AccountControllerTest {
         void shouldDepositMoney() throws Exception {
             PagoDto pagoDto = new PagoDto(100.0, "Deposit Test");
             when(accountService.getByIban("ES1234567890123456789012")).thenReturn(accountDto);
-            when(accountService.depositMoney(any(), eq(100.0), eq("Deposit Test"))).thenReturn(accountDto);
-
+            when(accountService.depositMoney(
+                    isNull(),
+                    eq(34.45),
+                    eq("concept"),
+                    eq("73773653354343")
+            )).thenReturn(accountDto);
             mockMvc.perform(post("/api/accounts/ES1234567890123456789012/deposit")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(pagoDto)))
@@ -103,7 +106,12 @@ class AccountControllerTest {
         void shouldWithdrawMoney() throws Exception {
             PagoDto pagoDto = new PagoDto(50.0, "Withdraw Test");
             when(accountService.getByIban("ES1234567890123456789012")).thenReturn(accountDto);
-            when(accountService.withdrawMoney(any(), eq(50.0), eq("Withdraw Test"))).thenReturn(accountDto);
+            when(accountService.withdrawMoney(
+                    isNull(),
+                    eq(34.45),
+                    eq("concept"),
+                    eq("73773653354343")
+            )).thenReturn(accountDto);
 
             mockMvc.perform(post("/api/accounts/ES1234567890123456789012/withdraw")
                     .contentType(MediaType.APPLICATION_JSON)
