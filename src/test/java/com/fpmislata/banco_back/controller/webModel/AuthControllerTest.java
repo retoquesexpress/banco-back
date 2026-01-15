@@ -13,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,7 +40,8 @@ class AuthControllerTest {
     @DisplayName("Should login successfully")
     void shouldLoginSuccessfully() throws Exception {
         AuthRequest loginRequest = new AuthRequest("jdoe", "pass");
-        AuthResponse authResponse = new AuthResponse("token123", "jdoe");
+        AuthResponse authResponse = new AuthResponse("token123", LocalDateTime.now().plusHours(1),
+                null);
 
         when(authService.login(any(AuthRequest.class))).thenReturn(authResponse);
 
