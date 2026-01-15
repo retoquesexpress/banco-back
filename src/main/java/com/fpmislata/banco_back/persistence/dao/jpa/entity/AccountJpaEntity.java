@@ -2,6 +2,7 @@ package com.fpmislata.banco_back.persistence.dao.jpa.entity;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "Account")
@@ -16,8 +17,9 @@ public class AccountJpaEntity {
     @JoinColumn(name = "id_client")
     private ClientJpaEntity client;
 
+
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-    private java.util.List<CreditCardJpaEntity> creditCards;
+    private List<CreditCardJpaEntity> creditCards;
 
     public AccountJpaEntity() {
     }
@@ -54,11 +56,12 @@ public class AccountJpaEntity {
         this.client = client;
     }
 
-    public java.util.List<CreditCardJpaEntity> getCreditCards() {
+
+    public List<CreditCardJpaEntity> getCreditCards() {
         return creditCards;
     }
 
-    public void setCreditCards(java.util.List<CreditCardJpaEntity> creditCards) {
+    public void setCreditCards(List<CreditCardJpaEntity> creditCards) {
         this.creditCards = creditCards;
     }
 }

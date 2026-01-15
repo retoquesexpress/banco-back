@@ -5,6 +5,8 @@ import com.fpmislata.banco_back.controller.webModel.response.AccountResponse;
 import com.fpmislata.banco_back.domain.model.Account;
 import com.fpmislata.banco_back.domain.repository.entity.AccountEntity;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
+import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
+
 import com.fpmislata.banco_back.domain.service.dto.ClientDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.AccountJpaEntity;
 
@@ -29,14 +31,13 @@ public class AccountMapper {
             return null;
         }
 
-        // Movements will be populated separately in the repository layer
-        // by querying AccountMovements where credit_card_origin matches any credit card
-        // from this account
+
+
         return new AccountEntity(
                 accountJpaEntity.getIban(),
                 accountJpaEntity.getBalance(),
                 ClientMapper.getInstance().fromClientJpaEntityToClientEntity(accountJpaEntity.getClient()),
-                Collections.emptyList(), // Will be populated by repository
+                Collections.emptyList(),
                 accountJpaEntity.getCreditCards().stream()
                         .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardEntity)
                         .toList());
@@ -49,6 +50,7 @@ public class AccountMapper {
         return new AccountJpaEntity(
                 accountEntity.iban(),
                 accountEntity.balance(),
+
                 ClientMapper.getInstance().fromClientEntityToClientJpaEntity(accountEntity.client()),
                 accountEntity.creditCards().stream()
                         .map(CreditCardMapper.getInstance()::fromCreditCardEntityToCreditCardJpaEntity)
@@ -61,6 +63,7 @@ public class AccountMapper {
         }
         return new AccountResponse(
                 accountDto.iban(),
+
                 accountDto.balance(),
                 accountDto.client(),
                 accountDto.movements(),
@@ -73,6 +76,7 @@ public class AccountMapper {
         }
         return new AccountDto(
                 accountRequest.iban(),
+
                 accountRequest.balance(),
                 null,
                 Collections.emptyList(),
@@ -100,6 +104,7 @@ public class AccountMapper {
         }
         return new AccountDto(
                 accountEntity.iban(),
+
                 accountEntity.balance(),
                 ClientMapper.getInstance().fromClientEntityToClientDto(accountEntity.client()),
                 accountEntity.accountMovements().stream()
@@ -116,6 +121,7 @@ public class AccountMapper {
         }
         return new AccountEntity(
                 accountDto.iban(),
+
                 accountDto.balance(),
                 ClientMapper.getInstance().fromClientDtoToClientEntity(accountDto.client()),
                 Collections.emptyList(),
@@ -129,6 +135,7 @@ public class AccountMapper {
         Account account = new Account(
                 accountDto.iban(),
                 accountDto.balance());
+        account.setClient(ClientMapper.getInstance().fromClientDtoToClient(accountDto.client()));
         account.setAccountMovements(accountDto.movements().stream()
                 .map(AccountMovementMapper.getInstance()::fromAccountMovementDtoToAccountMovement)
                 .toList());
@@ -136,5 +143,21 @@ public class AccountMapper {
                 .map(CreditCardMapper.getInstance()::fromCreditCardDtoToCreditCard)
                 .toList());
         return account;
+    }
+
+    public AccountDto fromAccountToAccountDto(Account account) {
+        if (account == null) {
+            return null;
+        }
+        return new AccountDto(
+                account.getIban(),
+                account.getBalance(),
+                ClientMapper.getInstance().fromClientToClientDto(account.getClient()),
+                account.getAccountMovements().stream()
+                        .map(AccountMovementMapper.getInstance()::fromAccountMovementToAccountMovementDto)
+                        .toList(),
+                account.getCreditCards().stream()
+                        .map(CreditCardMapper.getInstance()::fromCreditCardToCreditCardDto)
+                        .toList());
     }
 }

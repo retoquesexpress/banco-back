@@ -5,6 +5,7 @@ import com.fpmislata.banco_back.domain.model.CreditCard;
 import com.fpmislata.banco_back.domain.repository.ClientRepository;
 import com.fpmislata.banco_back.domain.repository.CreditCardRepository;
 import com.fpmislata.banco_back.domain.service.CreditCardService;
+import com.fpmislata.banco_back.domain.service.dto.AccountDto;
 import com.fpmislata.banco_back.domain.service.dto.ClientDto;
 import com.fpmislata.banco_back.domain.service.dto.CreditCardDto;
 import com.fpmislata.banco_back.exception.ResourceNotFoundException;
@@ -22,7 +23,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     }
 
     @Override
-    public List<CreditCardDto> findAllCreditCardsByAccount(Account account) {
+    public List<CreditCardDto> findAllCreditCardsByAccount(AccountDto account) {
         List<CreditCardDto> creditCards = creditCardRepository.findAllCreditCardsByAccount(account);
         if (creditCards.isEmpty()) {
             throw new ResourceNotFoundException("Credit Card Not Found");
@@ -39,6 +40,7 @@ public class CreditCardServiceImpl implements CreditCardService {
             throw new ResourceNotFoundException("Credit Card not found");
         }
     }
+
 
     @Override
     public List<CreditCardDto> findAll() {
