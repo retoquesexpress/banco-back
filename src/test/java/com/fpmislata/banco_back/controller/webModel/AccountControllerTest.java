@@ -45,12 +45,15 @@ class AccountControllerTest {
 
     private AccountDto accountDto;
     private ClientDto clientDto;
+    
 
     @BeforeEach
     void setUp() {
         clientDto = new ClientDto("12345678A", "jdoe", "pass", "John", "Doe", "Smith", "token");
         accountDto = new AccountDto("ES1234567890123456789012", 1000.0, clientDto, List.of(), List.of());
     }
+
+
 
     @Nested
     @DisplayName("Tests for GET operations")
