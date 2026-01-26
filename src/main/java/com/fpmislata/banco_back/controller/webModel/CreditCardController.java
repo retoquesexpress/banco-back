@@ -26,7 +26,6 @@ public class CreditCardController {
         this.accountService = accountService;
     }
 
-
     @GetMapping
     public ResponseEntity<List<CreditCardDetailResponse>> findAllCreditCardsByAccount(
             @RequestParam(required = false) String iban) {

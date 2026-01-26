@@ -11,11 +11,7 @@ import com.fpmislata.banco_back.exception.ResourceNotFoundException;
 import com.fpmislata.banco_back.mapper.AccountMapper;
 import com.fpmislata.banco_back.mapper.ClientMapper;
 import com.fpmislata.banco_back.mapper.CreditCardMapper;
-import com.fpmislata.banco_back.exception.ResourceNotFoundException;
-import com.fpmislata.banco_back.mapper.AccountMapper;
-import com.fpmislata.banco_back.mapper.ClientMapper;
 
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
@@ -105,7 +101,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private void validateConcept(String concept) {
-        if (concept == null || concept.trim().isEmpty() && concept.length() < 3) {
+        if (concept == null || concept.trim().length() < 3) {
             throw new BusinessException("El concepto no puede ser null ni menor de 3 caracteres");
         }
     }

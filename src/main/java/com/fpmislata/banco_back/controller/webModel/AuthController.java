@@ -1,6 +1,5 @@
 package com.fpmislata.banco_back.controller.webModel;
 
-
 import com.fpmislata.banco_back.controller.webModel.request.AuthRequest;
 import com.fpmislata.banco_back.controller.webModel.response.AuthResponse;
 import com.fpmislata.banco_back.domain.service.AuthService;
@@ -28,11 +27,11 @@ public class AuthController {
         try {
             AuthResponse authResponse = authService.login(request);
             return ResponseEntity.ok(authResponse);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             String message = e.getMessage();
-            if (message.contains("User not found")){
+            if (message.contains("User not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-            } else if (message.contains("Invalid credentials")){
+            } else if (message.contains("Invalid credentials")) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al Iniciar Sesión");
