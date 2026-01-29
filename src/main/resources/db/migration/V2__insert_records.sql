@@ -1,10 +1,10 @@
-INSERT INTO Client (dni, user_name, password, name, surname1, surname2, api_token)
+INSERT INTO client (dni, user_name, password, name, surname1, surname2, api_token)
 VALUES
 ('12345678A', 'jlopez', 'pass123', 'Juan', 'López', 'García', 'token123'),
 ('87654321B', 'mgarcia', 'pass456', 'María', 'García', 'Pérez', 'token456'),
 ('11223344C', 'aperez', 'pass789', 'Ana', 'Pérez', NULL, 'token789');
 
-INSERT INTO Account (iban, balance, id_client)
+INSERT INTO account (iban, balance, id_client)
 VALUES
 ('ES9121000418450200051332', 1500.50, '12345678A'),
 ('ES7921000813610123456789', 250.00, '12345678A'),
@@ -12,14 +12,14 @@ VALUES
 ('ES5621014813710123449772', 1.00, '11223344C');
 
 
-INSERT INTO AccountMovement
+INSERT INTO accountmovement
 (id_account_movement, credit_card_origin, origin_movement, date, amount, movement_type, concept)
 VALUES
 (1, '4111111111111111', 'TARJETA_BANCARIA', '2026-01-01', 100.00, 'RETIRAR', 'Cash withdrawal'),
 (2, '4111111111111111', 'DOMICILIACION', '2026-01-03', 45.99, 'DEPOSITAR', 'Amazon purchase'),
 (3, '5500000000000004', 'TRANSFERENCIA', '2026-01-05', 500.00, 'DEPOSITAR', 'Salary');
 
-INSERT INTO CreditCard
+INSERT INTO creditcard
 (id_credit_card, card_number, expiration_date, cvv, nombre_completo, id_account)
 VALUES
 (1, '4111111111111111', '2027-12-31', 123, 'Juan López', 'ES9121000418450200051332'),

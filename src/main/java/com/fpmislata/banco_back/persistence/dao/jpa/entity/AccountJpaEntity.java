@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Account")
+@Table(name = "account")
 public class AccountJpaEntity {
     @Id
     @Column(name = "iban")
@@ -16,7 +16,6 @@ public class AccountJpaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_client")
     private ClientJpaEntity client;
-
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<CreditCardJpaEntity> creditCards;
@@ -55,7 +54,6 @@ public class AccountJpaEntity {
     public void setClient(ClientJpaEntity client) {
         this.client = client;
     }
-
 
     public List<CreditCardJpaEntity> getCreditCards() {
         return creditCards;
