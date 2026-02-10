@@ -48,9 +48,22 @@ public class CreditCardServiceImpl implements CreditCardService {
     public void validate(CreditCardDto origen) {
         CreditCardDto creditCardDto = creditCardRepository.findCreditCardByCardNumber(origen.cardNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Credit Card not found"));
-        if (creditCardDto.expirationDate().isBefore(LocalDate.now())) {
+        
+        // Credit cards expire at the end of the month, so we compare year and month only
+        LocalDate now = LocalDate.now();
+        LocalDate cardExpiration = creditCardDto.expirationDate();
+        
+        if (cardExpiration.getYear() < now.getYear() || 
+            (cardExpiration.getYear() == now.getYear() && cardExpiration.getMonthValue() < now.getMonthValue())) {
             throw new ResourceNotFoundException("Credit Card has expired");
         }
+
+        // Check if input expiration date matches the one in DB (Month and Year)
+        if (cardExpiration.getYear() != origen.expirationDate().getYear() || 
+            cardExpiration.getMonthValue() != origen.expirationDate().getMonthValue()) {
+            throw new ResourceNotFoundException("Invalid Expiration Date");
+        }
+        
         if (!creditCardDto.cvv().equals(origen.cvv())) {
             throw new ResourceNotFoundException("Invalid CVV");
         }
