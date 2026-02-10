@@ -1,12 +1,9 @@
 package com.fpmislata.banco_back.persistence.repository;
 
-import com.fpmislata.banco_back.domain.model.Account;
 import com.fpmislata.banco_back.domain.repository.CreditCardRepository;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
 import com.fpmislata.banco_back.domain.service.dto.CreditCardDto;
-import com.fpmislata.banco_back.mapper.ClientMapper;
 import com.fpmislata.banco_back.mapper.CreditCardMapper;
-import com.fpmislata.banco_back.persistence.dao.jpa.ClientJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.CreditCardJpaDao;
 
 import java.util.List;
@@ -22,7 +19,8 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
 
     @Override
     public List<CreditCardDto> findAllCreditCardsByAccount(AccountDto account) {
-        return creditCardJpaDao.findAllCreditCardsByAccount(account).stream().map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto).toList();
+        return creditCardJpaDao.findAllCreditCardsByAccount(account).stream()
+                .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto).toList();
 
     }
 
@@ -32,7 +30,11 @@ public class CreditCardRepositoryImpl implements CreditCardRepository {
                 .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto);
     }
 
-
+    @Override
+    public Optional<CreditCardDto> findCreditCardByCardNumber(String cardNumber) {
+        return creditCardJpaDao.findCreditCardByCardNumber(cardNumber)
+                .map(CreditCardMapper.getInstance()::fromCreditCardJpaEntityToCreditCardDto);
+    }
 
     @Override
     public List<CreditCardDto> findAll() {

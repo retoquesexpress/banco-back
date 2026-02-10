@@ -46,7 +46,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public void validate(CreditCardDto origen) {
-        CreditCardDto creditCardDto = creditCardRepository.findCreditCardById(origen.idCreditCard())
+        CreditCardDto creditCardDto = creditCardRepository.findCreditCardByCardNumber(origen.cardNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Credit Card not found"));
         if (creditCardDto.expirationDate().isBefore(LocalDate.now())) {
             throw new ResourceNotFoundException("Credit Card has expired");

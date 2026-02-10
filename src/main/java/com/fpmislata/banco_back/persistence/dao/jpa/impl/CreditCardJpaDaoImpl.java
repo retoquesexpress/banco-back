@@ -1,8 +1,6 @@
 package com.fpmislata.banco_back.persistence.dao.jpa.impl;
 
-import com.fpmislata.banco_back.domain.model.Account;
 import com.fpmislata.banco_back.domain.service.dto.AccountDto;
-import com.fpmislata.banco_back.domain.service.dto.CreditCardDto;
 import com.fpmislata.banco_back.persistence.dao.jpa.CreditCardJpaDao;
 import com.fpmislata.banco_back.persistence.dao.jpa.entity.CreditCardJpaEntity;
 import jakarta.persistence.EntityManager;
@@ -28,6 +26,16 @@ public class CreditCardJpaDaoImpl implements CreditCardJpaDao {
     @Override
     public Optional<CreditCardJpaEntity> findCreditCardById(Integer id) {
         return Optional.ofNullable(entityManager.find(CreditCardJpaEntity.class, id));
+    }
+
+    @Override
+    public Optional<CreditCardJpaEntity> findCreditCardByCardNumber(String cardNumber) {
+        return entityManager.createQuery(
+                "SELECT c FROM CreditCardJpaEntity c WHERE c.cardNumber = :cardNumber",
+                CreditCardJpaEntity.class)
+                .setParameter("cardNumber", cardNumber)
+                .getResultStream()
+                .findFirst();
     }
 
     @Override
