@@ -49,7 +49,6 @@ public class CreditCardServiceImpl implements CreditCardService {
         CreditCardDto creditCardDto = creditCardRepository.findCreditCardByCardNumber(origen.cardNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Credit Card not found"));
         
-        // Credit cards expire at the end of the month, so we compare year and month only
         LocalDate now = LocalDate.now();
         LocalDate cardExpiration = creditCardDto.expirationDate();
         
@@ -58,8 +57,7 @@ public class CreditCardServiceImpl implements CreditCardService {
             throw new ResourceNotFoundException("Credit Card has expired");
         }
 
-        // Check if input expiration date matches the one in DB (Month and Year)
-        if (cardExpiration.getYear() != origen.expirationDate().getYear() || 
+        if (cardExpiration.getYear() != origen.expirationDate().getYear() ||
             cardExpiration.getMonthValue() != origen.expirationDate().getMonthValue()) {
             throw new ResourceNotFoundException("Invalid Expiration Date");
         }
