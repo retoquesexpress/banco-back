@@ -15,7 +15,7 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
 
     @Override
     public List<AccountMovementJpaEntity> findAllAccountMovements() {
-        return entityManager.createQuery("SELECT am FROM AccountMovementJpaEntity am").getResultList();
+        return entityManager.createQuery("SELECT am FROM AccountMovementJpaEntity am ORDER BY am.date DESC").getResultList();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
     @Override
     public List<AccountMovementJpaEntity> findByCreditCardOrigin(String origin) {
         return entityManager
-                .createQuery("SELECT am FROM AccountMovementJpaEntity am WHERE am.creditCardOrigin = :origin",
+                .createQuery("SELECT am FROM AccountMovementJpaEntity am WHERE am.creditCardOrigin = :origin ORDER BY am.date DESC",
                         AccountMovementJpaEntity.class)
                 .setParameter("origin", origin)
                 .getResultList();
@@ -41,7 +41,7 @@ public class AccountMovementJpaDaoImpl implements AccountMovementJpaDao {
     public List<AccountMovementJpaEntity> findAllMovementsByAccount(String iban) {
         return entityManager
                 .createQuery(
-                        "SELECT am FROM AccountMovementJpaEntity am JOIN CreditCardJpaEntity cc ON am.creditCardOrigin = cc.cardNumber WHERE cc.account.iban = :iban",
+                        "SELECT am FROM AccountMovementJpaEntity am JOIN CreditCardJpaEntity cc ON am.creditCardOrigin = cc.cardNumber WHERE cc.account.iban = :iban ORDER BY am.date DESC",
                         AccountMovementJpaEntity.class)
                 .setParameter("iban", iban)
                 .getResultList();

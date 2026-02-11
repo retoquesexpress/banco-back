@@ -55,9 +55,9 @@ public class AccountJpaDaoImpl implements AccountJpaDao {
     @Override
     public Optional<AccountJpaEntity> findAccountByCreditCard(CreditCardJpaEntity creditCardJpaEntity) {
         return entityManager
-                .createQuery("SELECT a FROM AccountJpaEntity a JOIN a.creditCards c WHERE c = :creditCard",
+                .createQuery("SELECT a FROM AccountJpaEntity a JOIN a.creditCards c WHERE c.cardNumber = :cardNumber",
                         AccountJpaEntity.class)
-                .setParameter("creditCard", creditCardJpaEntity)
+                .setParameter("cardNumber", creditCardJpaEntity.getCardNumber())
                 .getResultStream()
                 .findFirst();
     }

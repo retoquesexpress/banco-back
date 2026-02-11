@@ -33,7 +33,7 @@ public class PagoTarjetaServiceImpl implements PagoTarjetaService {
                 pagoTarjetaRequest.origen().cardNumber());
         accountService.depositMoney(accountDestino,
                 pagoTarjetaRequest.pago().importe(), pagoTarjetaRequest.pago().concept(),
-                pagoTarjetaRequest.origen().cardNumber());
+                null);
 
     }
 }

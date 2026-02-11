@@ -13,5 +13,7 @@ public interface CreditCardJpaDao {
 
     Optional<CreditCardJpaEntity> findCreditCardById(Integer id);
 
+    Optional<CreditCardJpaEntity> findCreditCardByCardNumber(String cardNumber);
+
     List<CreditCardJpaEntity> findAll();
 }
